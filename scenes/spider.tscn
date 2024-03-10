@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://dyp38iq02ywhy"]
+
+[ext_resource type="Texture2D" uid="uid://86keaobt3r8l" path="res://sprites/spider.png" id="1_lpodg"]
+[ext_resource type="Script" path="res://scripts/spider.gd" id="1_tpman"]
+[ext_resource type="Theme" uid="uid://cpxca4qeaggbs" path="res://ui_theme.tres" id="4_6wsnq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p1x6a"]
+size = Vector2(12, 9)
+
+[node name="Spider" type="CharacterBody2D" groups=["mobs"]]
+script = ExtResource("1_tpman")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_p1x6a")
+
+[node name="RotationPoint" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="RotationPoint"]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(-3.55271e-15, 0)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("1_lpodg")
+
+[node name="Healthbar" type="ProgressBar" parent="."]
+texture_filter = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -7.0
+offset_top = -9.0
+offset_right = 8.0
+offset_bottom = -5.0
+grow_horizontal = 2
+theme = ExtResource("4_6wsnq")
+value = 50.0
+show_percentage = false
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 16.0
+navigation_layers = 3
+debug_enabled = true
+debug_path_custom_color = Color(1, 0, 0, 1)
+debug_path_custom_point_size = 8.76
+
+[node name="MovePause" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true

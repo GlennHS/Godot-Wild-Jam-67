@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://mis8ugrv334t"]
+
+[ext_resource type="Script" path="res://scripts/gun.gd" id="1_g15jq"]
+[ext_resource type="Texture2D" uid="uid://cnk5wr17qk8j2" path="res://sprites/gun.png" id="1_gcggi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o2bsr"]
+size = Vector2(1, 1)
+
+[node name="Gun" type="Node2D"]
+script = ExtResource("1_g15jq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 1
+texture = ExtResource("1_gcggi")
+
+[node name="FirePointCollision" type="Area2D" parent="."]
+position = Vector2(23, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FirePointCollision"]
+shape = SubResource("RectangleShape2D_o2bsr")
+
+[node name="FirePoint" type="Marker2D" parent="."]
+position = Vector2(18, 0)
+
+[connection signal="body_entered" from="FirePointCollision" to="." method="_on_fire_point_body_entered"]
+[connection signal="body_exited" from="FirePointCollision" to="." method="_on_fire_point_body_exited"]

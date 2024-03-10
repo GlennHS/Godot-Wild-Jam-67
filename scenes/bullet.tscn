@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbq260fkci4i5"]
+
+[ext_resource type="Texture2D" uid="uid://xpjbp2fjhmpp" path="res://sprites/bullet.png" id="1_1xri2"]
+[ext_resource type="Script" path="res://scripts/bullet.gd" id="1_7f8g1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5vtb4"]
+size = Vector2(2, 1)
+
+[node name="Bullet" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_7f8g1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_5vtb4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 1
+texture = ExtResource("1_1xri2")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="Lifetime" type="Timer" parent="."]
+unique_name_in_owner = true
+autostart = true
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="timeout" from="Lifetime" to="." method="_on_lifetime_timeout"]
