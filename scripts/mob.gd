@@ -14,15 +14,13 @@ func _ready():
 	$Healthbar.value = health
 	$Healthbar.max_value = health
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	await get_tree().physics_frame
 	nav_agent.target_position = player.global_position
 	nav_agent.is_target_reachable()
 
 func get_directions(x: Vector2, y: Vector2) -> Array[Vector2]:
 	# Calculate the vector from X to Y
-	var dx = y.x - x.x
-	var dy = y.y - x.y
 	var v = y - x
 	
 	if(v.x > 0 and v.y < 0):

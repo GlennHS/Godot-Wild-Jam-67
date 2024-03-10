@@ -1,10 +1,12 @@
 extends CharacterBody2D
 
+class_name Bullet
+
 var speed = 150
 
-const CAN_BOUNCE = true
-const CAN_PENETRATE = false
-const damage = 10
+var can_bounce = false
+var can_penetrate = false
+var damage = 10
 
 var gun_stats = {
 	"damage_mult": 1
@@ -26,9 +28,10 @@ func _physics_process(delta):
 			collision.get_collider().hit({
 				"damage": calculate_damage()
 			})
-			if(not CAN_PENETRATE):
+			if(not can_penetrate):
 				queue_free()
-		if(CAN_BOUNCE):
+		if(can_bounce
+	):
 			velocity = velocity.bounce(collision.get_normal())
 		else:
 			queue_free()

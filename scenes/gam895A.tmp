@@ -1,54 +1,53 @@
-[gd_scene load_steps=14 format=3 uid="uid://bhfisvccwil76"]
+[gd_scene load_steps=13 format=3 uid="uid://bhfisvccwil76"]
 
 [ext_resource type="TileSet" uid="uid://cxnvxncv43seq" path="res://tilesets/tileset.tres" id="1_p6xl5"]
 [ext_resource type="PackedScene" uid="uid://d1yogmjhyl232" path="res://scenes/player.tscn" id="2_4622k"]
 [ext_resource type="PackedScene" uid="uid://dyp38iq02ywhy" path="res://scenes/mobs/spider.tscn" id="3_4ahb7"]
 [ext_resource type="Theme" uid="uid://cpxca4qeaggbs" path="res://ui_theme.tres" id="4_gtotw"]
-[ext_resource type="Texture2D" uid="uid://cosuivmj0r3i8" path="res://sprites/ui_sprites/player_faces/headshot.png" id="5_0hac8"]
 [ext_resource type="Texture2D" uid="uid://de2pddjm5w0n" path="res://cursors/wait_cursor_sheet.png" id="5_wjcs7"]
 [ext_resource type="Script" path="res://scripts/cursor.gd" id="6_hi3wt"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_iw2ae"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_u70qo"]
 atlas = ExtResource("5_wjcs7")
-region = Rect2(0, 0, 32, 32)
+region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_y0opm"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ulfb"]
 atlas = ExtResource("5_wjcs7")
-region = Rect2(32, 0, 32, 32)
+region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6vw2p"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_oo2ly"]
 atlas = ExtResource("5_wjcs7")
-region = Rect2(64, 0, 32, 32)
+region = Rect2(32, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pfeto"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_www16"]
 atlas = ExtResource("5_wjcs7")
-region = Rect2(96, 0, 32, 32)
+region = Rect2(48, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_a3ald"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_jgflk"]
 atlas = ExtResource("5_wjcs7")
-region = Rect2(128, 0, 32, 32)
+region = Rect2(64, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_tn4i4"]
 animations = [{
 "frames": [{
 "duration": 3.0,
-"texture": SubResource("AtlasTexture_iw2ae")
+"texture": SubResource("AtlasTexture_u70qo")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_y0opm")
+"texture": SubResource("AtlasTexture_7ulfb")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6vw2p")
+"texture": SubResource("AtlasTexture_oo2ly")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_pfeto")
+"texture": SubResource("AtlasTexture_www16")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_a3ald")
+"texture": SubResource("AtlasTexture_jgflk")
 }],
 "loop": true,
 "name": &"default",
-"speed": 10.0
+"speed": 5.0
 }]
 
 [node name="Game" type="Node2D"]
@@ -76,6 +75,7 @@ position = Vector2(120, 120)
 [node name="Player" parent="." instance=ExtResource("2_4622k")]
 unique_name_in_owner = true
 position = Vector2(24, 24)
+health = 100
 
 [node name="GameOver" type="CanvasLayer" parent="."]
 visible = false
@@ -106,41 +106,7 @@ text = "You Died"
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="MainPanel" type="PanelContainer" parent="UI"]
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -128.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="FacePanel" type="PanelContainer" parent="UI/MainPanel"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="FaceBackground" type="ColorRect" parent="UI/MainPanel/FacePanel"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="FaceTexture" type="TextureRect" parent="UI/MainPanel/FacePanel/FaceBackground"]
-texture_filter = 1
-texture_repeat = 1
-layout_mode = 1
-anchors_preset = 13
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -64.0
-offset_right = 64.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("5_0hac8")
-expand_mode = 2
-stretch_mode = 5
-
 [node name="WaitCursorSprite" type="AnimatedSprite2D" parent="."]
-visible = false
 position = Vector2(-48, 42)
 sprite_frames = SubResource("SpriteFrames_tn4i4")
 autoplay = "default"

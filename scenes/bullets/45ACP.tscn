@@ -1,14 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://cbq260fkci4i5"]
+[gd_scene load_steps=4 format=3 uid="uid://cyofd4s612n43"]
 
-[ext_resource type="Texture2D" uid="uid://xpjbp2fjhmpp" path="res://sprites/bullet.png" id="1_1xri2"]
-[ext_resource type="Script" path="res://scripts/bullet.gd" id="1_7f8g1"]
+[ext_resource type="Script" path="res://scripts/bullets/45ACP.gd" id="1_wxicp"]
+[ext_resource type="Texture2D" uid="uid://xpjbp2fjhmpp" path="res://sprites/bullet.png" id="2_3kyh6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5vtb4"]
 size = Vector2(2, 1)
 
-[node name="Bullet" type="CharacterBody2D"]
+[node name="45ACP" type="CharacterBody2D"]
 collision_layer = 2
-script = ExtResource("1_7f8g1")
+script = ExtResource("1_wxicp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_5vtb4")
@@ -16,9 +16,10 @@ shape = SubResource("RectangleShape2D_5vtb4")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 texture_repeat = 1
-texture = ExtResource("1_1xri2")
+texture = ExtResource("2_3kyh6")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-1, -0.5, 2, 1)
 
 [node name="Lifetime" type="Timer" parent="."]
 unique_name_in_owner = true

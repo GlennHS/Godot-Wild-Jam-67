@@ -1,35 +1,38 @@
 [gd_scene load_steps=6 format=3 uid="uid://d1yogmjhyl232"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_c1sec"]
-[ext_resource type="Texture2D" uid="uid://c0ea83rldlgg8" path="res://sprites/player.png" id="2_pdagx"]
-[ext_resource type="PackedScene" uid="uid://mis8ugrv334t" path="res://scenes/gun.tscn" id="3_halnf"]
+[ext_resource type="Texture2D" uid="uid://b8nrmpodbv1bv" path="res://sprites/player_new.png" id="2_ebeo3"]
+[ext_resource type="PackedScene" uid="uid://mis8ugrv334t" path="res://scenes/guns/burst_rifle.tscn" id="3_halnf"]
 [ext_resource type="Theme" uid="uid://cpxca4qeaggbs" path="res://ui_theme.tres" id="4_30nog"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p1x6a"]
-size = Vector2(12, 12)
+size = Vector2(16, 16)
 
 [node name="Player" type="CharacterBody2D"]
+position = Vector2(4, 0)
 script = ExtResource("1_c1sec")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(3, 3)
+zoom = Vector2(2, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_p1x6a")
 
 [node name="RotationPoint" type="Node2D" parent="."]
+position = Vector2(-4, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="RotationPoint"]
 texture_filter = 1
 texture_repeat = 1
-position = Vector2(-3, 0)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_pdagx")
+position = Vector2(3, 4.76837e-07)
+rotation = 1.5708
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("2_ebeo3")
 
 [node name="Gun" parent="RotationPoint" instance=ExtResource("3_halnf")]
-position = Vector2(5, 3)
-scale = Vector2(0.25, 0.25)
+position = Vector2(9, 4.76837e-07)
+scale = Vector2(0.3, 0.3)
 
 [node name="Healthbar" type="ProgressBar" parent="."]
 unique_name_in_owner = true

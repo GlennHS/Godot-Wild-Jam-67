@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var tile_map = get_node("/root/Game/%TileMap")
+@onready var cursor_script = get_node("/root/Game/CursorScript")
 
 @export var health = 100
 
@@ -9,7 +10,7 @@ var is_turn = true
 func _ready():
 	%Healthbar.value = health
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	$RotationPoint.look_at(get_global_mouse_position())
 
 func _input(event):
@@ -17,6 +18,7 @@ func _input(event):
 		return
 	
 	var has_moved = false
+	var has_shot = false
 	if event.is_action_pressed("move_down"):
 		has_moved = move(Vector2.DOWN)
 	elif event.is_action_pressed("move_up"):
@@ -28,6 +30,7 @@ func _input(event):
 	elif event.is_released() && event.is_action_released("shoot"):
 		$RotationPoint/Gun.shoot()
 		has_moved = true
+		has_shot = true
 	else:
 		# We don't want to bother continuing or process a turn so exit here
 		return
@@ -35,8 +38,11 @@ func _input(event):
 	if not has_moved:
 		return
 	is_turn = false
-	$TurnWaitTimer.start()
-	await $TurnWaitTimer.timeout
+	if has_shot:
+		cursor_script.set_cursor("wait")
+		$TurnWaitTimer.start()
+		await $TurnWaitTimer.timeout
+		cursor_script.set_cursor("base")
 	
 	for mob in get_tree().get_nodes_in_group("mobs"):
 		if mob.has_method("execute_turn"):
