@@ -1,12 +1,22 @@
-[gd_scene load_steps=14 format=3 uid="uid://bhfisvccwil76"]
+[gd_scene load_steps=18 format=3 uid="uid://bhfisvccwil76"]
 
 [ext_resource type="TileSet" uid="uid://cxnvxncv43seq" path="res://tilesets/tileset.tres" id="1_p6xl5"]
 [ext_resource type="PackedScene" uid="uid://d1yogmjhyl232" path="res://scenes/player.tscn" id="2_4622k"]
 [ext_resource type="PackedScene" uid="uid://dyp38iq02ywhy" path="res://scenes/mobs/spider.tscn" id="3_4ahb7"]
 [ext_resource type="Theme" uid="uid://cpxca4qeaggbs" path="res://ui_theme.tres" id="4_gtotw"]
 [ext_resource type="Texture2D" uid="uid://cosuivmj0r3i8" path="res://sprites/ui_sprites/player_faces/headshot.png" id="5_0hac8"]
+[ext_resource type="Script" path="res://scripts/UI.gd" id="5_tl30w"]
 [ext_resource type="Texture2D" uid="uid://de2pddjm5w0n" path="res://cursors/wait_cursor_sheet.png" id="5_wjcs7"]
 [ext_resource type="Script" path="res://scripts/cursor.gd" id="6_hi3wt"]
+[ext_resource type="Texture2D" uid="uid://d074k1gfoi32w" path="res://sprites/ui_sprites/bullets/9mm.png" id="7_sd7qy"]
+[ext_resource type="Texture2D" uid="uid://bvsrldv8i0n5g" path="res://sprites/ui_sprites/guns/pistol.png" id="8_qkjni"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sg5bv"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iw2ae"]
 atlas = ExtResource("5_wjcs7")
@@ -105,6 +115,7 @@ theme_override_font_sizes/font_size = 48
 text = "You Died"
 
 [node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("5_tl30w")
 
 [node name="MainPanel" type="PanelContainer" parent="UI"]
 anchors_preset = 12
@@ -115,15 +126,31 @@ offset_top = -128.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="FacePanel" type="PanelContainer" parent="UI/MainPanel"]
+[node name="ColorRect" type="ColorRect" parent="UI/MainPanel"]
 layout_mode = 2
+color = Color(0.333333, 0.164706, 0.0980392, 0.631373)
+
+[node name="FacePanel" type="PanelContainer" parent="UI"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -128.0
+offset_right = 64.0
+grow_horizontal = 2
+grow_vertical = 0
 size_flags_horizontal = 4
 
-[node name="FaceBackground" type="ColorRect" parent="UI/MainPanel/FacePanel"]
+[node name="RedBackground" type="ColorRect" parent="UI/FacePanel"]
 layout_mode = 2
-size_flags_horizontal = 4
+color = Color(0.87451, 0.105882, 0.0666667, 1)
 
-[node name="FaceTexture" type="TextureRect" parent="UI/MainPanel/FacePanel/FaceBackground"]
+[node name="FaceBackground" type="ColorRect" parent="UI/FacePanel"]
+layout_mode = 2
+
+[node name="FaceTexture" type="TextureRect" parent="UI/FacePanel/FaceBackground"]
 texture_filter = 1
 texture_repeat = 1
 layout_mode = 1
@@ -138,6 +165,156 @@ grow_vertical = 2
 texture = ExtResource("5_0hac8")
 expand_mode = 2
 stretch_mode = 5
+
+[node name="WeaponContainer" type="HBoxContainer" parent="UI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -128.0
+offset_right = 192.0
+grow_vertical = 0
+
+[node name="AmmoRect" type="ColorRect" parent="UI/WeaponContainer"]
+layout_mode = 2
+color = Color(0.670588, 0.584314, 0.568627, 1)
+
+[node name="AmmoTexture" type="TextureRect" parent="UI/WeaponContainer/AmmoRect"]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 139.0
+offset_top = -96.0
+offset_right = 203.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("7_sd7qy")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TabContainer" type="TabContainer" parent="UI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -160.0
+offset_right = 400.0
+offset_bottom = -1.0
+grow_vertical = 0
+size_flags_vertical = 4
+current_tab = 1
+
+[node name="Weapon" type="PanelContainer" parent="UI/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sg5bv")
+
+[node name="GunTexture" type="TextureRect" parent="UI/TabContainer/Weapon"]
+texture_filter = 1
+texture_repeat = 1
+custom_minimum_size = Vector2(128, 64)
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("8_qkjni")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/TabContainer/Weapon"]
+layout_mode = 2
+size_flags_horizontal = 8
+alignment = 1
+
+[node name="GunName" type="Label" parent="UI/TabContainer/Weapon/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 14
+text = "L&S Shortarm 7+1 Round"
+
+[node name="GunDamage" type="Label" parent="UI/TabContainer/Weapon/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Damage Multiplier: 0.5x"
+
+[node name="GunFireRate" type="Label" parent="UI/TabContainer/Weapon/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Shots per Burst: 1"
+
+[node name="GunBurstCount" type="Label" parent="UI/TabContainer/Weapon/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Bursts per Trigger Pull: 1"
+
+[node name="Ammo" type="PanelContainer" parent="UI/TabContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sg5bv")
+
+[node name="AmmoTexture" type="TextureRect" parent="UI/TabContainer/Ammo"]
+texture_filter = 1
+texture_repeat = 1
+custom_minimum_size = Vector2(128, 64)
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("7_sd7qy")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/TabContainer/Ammo"]
+layout_mode = 2
+size_flags_horizontal = 8
+alignment = 1
+
+[node name="AmmoName" type="Label" parent="UI/TabContainer/Ammo/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 14
+text = "9x9mm Parabellum"
+
+[node name="AmmoDamage" type="Label" parent="UI/TabContainer/Ammo/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Damage: 10hp"
+
+[node name="AmmoPenetrates" type="Label" parent="UI/TabContainer/Ammo/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Non-Penetrative"
+
+[node name="AmmoBounces" type="Label" parent="UI/TabContainer/Ammo/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Non-Bouncing
+"
 
 [node name="WaitCursorSprite" type="AnimatedSprite2D" parent="."]
 visible = false

@@ -3,7 +3,6 @@ extends CharacterBody2D
 class_name Bullet
 
 var speed = 150
-
 var can_bounce = false
 var can_penetrate = false
 var damage = 10

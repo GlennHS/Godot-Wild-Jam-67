@@ -3,6 +3,7 @@ extends Node2D
 class_name Gun
 
 signal gun_fired
+signal ammo_changed
 
 var bullets_per_shot = 1
 var shots_per_burst = 1
@@ -43,3 +44,7 @@ func _on_fire_point_body_exited(_body):
 
 func change_ammo(ammo_scene):
 	bullet_scene = ammo_scene
+	emit_signal("ammo_changed")
+	
+func get_texture():
+	return $Sprite2D.texture

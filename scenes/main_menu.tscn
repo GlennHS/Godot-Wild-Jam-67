@@ -1,0 +1,91 @@
+[gd_scene load_steps=5 format=3 uid="uid://cvkdkuhs7wxf6"]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_4c6e0"]
+[ext_resource type="Texture2D" uid="uid://b5msfabxnxn2p" path="res://sprites/ui_sprites/menu-bg.png" id="2_5q8jc"]
+[ext_resource type="Theme" uid="uid://dq0youvb741i2" path="res://main_menu_theme.tres" id="3_v187j"]
+[ext_resource type="AudioStream" uid="uid://che1wutngngxh" path="res://audio/music/Paracide-MainMenu.wav" id="4_rppwn"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4c6e0")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.145098, 0.145098, 0.145098, 0.886275)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_5q8jc")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 128.0
+offset_bottom = 151.0
+grow_horizontal = 2
+theme = ExtResource("3_v187j")
+text = "Paracide"
+horizontal_alignment = 1
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -448.0
+offset_right = 100.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 30
+
+[node name="Start" type="Button" parent="Buttons"]
+layout_mode = 2
+theme = ExtResource("3_v187j")
+text = "Start"
+
+[node name="Options" type="Button" parent="Buttons"]
+layout_mode = 2
+theme = ExtResource("3_v187j")
+text = "Options"
+
+[node name="Credits" type="Button" parent="Buttons"]
+layout_mode = 2
+theme = ExtResource("3_v187j")
+text = "Credits
+"
+
+[node name="Quit" type="Button" parent="Buttons"]
+layout_mode = 2
+theme = ExtResource("3_v187j")
+text = "Quit"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_rppwn")
+volume_db = -4.738
+autoplay = true
+
+[connection signal="pressed" from="Buttons/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Buttons/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="Buttons/Credits" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="Buttons/Quit" to="." method="_on_quit_pressed"]

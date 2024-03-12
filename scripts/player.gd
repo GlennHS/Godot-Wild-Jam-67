@@ -3,7 +3,10 @@ extends Node2D
 @onready var tile_map = get_node("/root/Game/%TileMap")
 @onready var cursor_script = get_node("/root/Game/CursorScript")
 
-@export var health = 100
+@export var health = 100.0
+@onready var max_health = health
+
+signal player_damaged
 
 var is_turn = true
 
@@ -71,6 +74,7 @@ func move(direction: Vector2):
 func hit(hit_data):
 	health -= hit_data.damage
 	update_healthbar()
+	emit_signal("player_damaged", health / max_health)
 	if health <= 0:
 		game_over()
 	
