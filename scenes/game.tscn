@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bhfisvccwil76"]
+[gd_scene load_steps=21 format=3 uid="uid://bhfisvccwil76"]
 
 [ext_resource type="TileSet" uid="uid://cxnvxncv43seq" path="res://tilesets/tileset.tres" id="1_p6xl5"]
 [ext_resource type="PackedScene" uid="uid://d1yogmjhyl232" path="res://scenes/player.tscn" id="2_4622k"]
@@ -10,13 +10,9 @@
 [ext_resource type="Script" path="res://scripts/cursor.gd" id="6_hi3wt"]
 [ext_resource type="Texture2D" uid="uid://d074k1gfoi32w" path="res://sprites/ui_sprites/bullets/9mm.png" id="7_sd7qy"]
 [ext_resource type="Texture2D" uid="uid://bvsrldv8i0n5g" path="res://sprites/ui_sprites/guns/pistol.png" id="8_qkjni"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sg5bv"]
-content_margin_left = 20.0
-content_margin_top = 5.0
-content_margin_right = 20.0
-content_margin_bottom = 5.0
-bg_color = Color(1, 1, 1, 1)
+[ext_resource type="Texture2D" uid="uid://bqlfpgkhe6tqm" path="res://sprites/ui_sprites/mag.png" id="11_0j3y0"]
+[ext_resource type="Texture2D" uid="uid://bf2sdtn2dm2je" path="res://sprites/ui_sprites/health.png" id="11_key6g"]
+[ext_resource type="Texture2D" uid="uid://d0satjrrcn5u3" path="res://sprites/ui_sprites/shield.png" id="12_fjobt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iw2ae"]
 atlas = ExtResource("5_wjcs7")
@@ -61,6 +57,13 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sg5bv"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(1, 1, 1, 1)
+
 [node name="Game" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -87,32 +90,14 @@ position = Vector2(120, 120)
 unique_name_in_owner = true
 position = Vector2(24, 24)
 
-[node name="GameOver" type="CanvasLayer" parent="."]
+[node name="WaitCursorSprite" type="AnimatedSprite2D" parent="."]
 visible = false
+position = Vector2(-48, 42)
+sprite_frames = SubResource("SpriteFrames_tn4i4")
+autoplay = "default"
 
-[node name="ColorRect" type="ColorRect" parent="GameOver"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.160784, 0.160784, 0.160784, 0.137255)
-
-[node name="Label" type="Label" parent="GameOver"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -102.5
-offset_top = -33.5
-offset_right = 102.5
-offset_bottom = 33.5
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("4_gtotw")
-theme_override_font_sizes/font_size = 48
-text = "You Died"
+[node name="CursorScript" type="Node" parent="."]
+script = ExtResource("6_hi3wt")
 
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource("5_tl30w")
@@ -166,161 +151,261 @@ texture = ExtResource("5_0hac8")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="WeaponContainer" type="HBoxContainer" parent="UI"]
-anchors_preset = 2
+[node name="PlayerStats" type="GridContainer" parent="UI"]
+anchors_preset = 3
+anchor_left = 1.0
 anchor_top = 1.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -128.0
-offset_right = 192.0
+offset_left = -433.0
+offset_top = -118.0
+offset_right = -304.0
+offset_bottom = -10.0
+grow_horizontal = 0
 grow_vertical = 0
+theme_override_constants/h_separation = 8
+columns = 2
 
-[node name="AmmoRect" type="ColorRect" parent="UI/WeaponContainer"]
-layout_mode = 2
-color = Color(0.670588, 0.584314, 0.568627, 1)
-
-[node name="AmmoTexture" type="TextureRect" parent="UI/WeaponContainer/AmmoRect"]
+[node name="HealthIcon" type="TextureRect" parent="UI/PlayerStats"]
 texture_filter = 1
 texture_repeat = 1
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 139.0
-offset_top = -96.0
-offset_right = 203.0
-offset_bottom = -32.0
-grow_horizontal = 2
-grow_vertical = 0
-texture = ExtResource("7_sd7qy")
-expand_mode = 2
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("11_key6g")
+expand_mode = 5
 stretch_mode = 5
 
-[node name="TabContainer" type="TabContainer" parent="UI"]
+[node name="PlayerHealth" type="Label" parent="UI/PlayerStats"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "50"
+
+[node name="ShieldIcon" type="TextureRect" parent="UI/PlayerStats"]
+texture_filter = 1
+texture_repeat = 1
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("12_fjobt")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="PlayerShield" type="Label" parent="UI/PlayerStats"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "10%"
+
+[node name="GunStats" type="GridContainer" parent="UI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -714.0
+offset_top = -118.0
+offset_right = -585.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/h_separation = 8
+columns = 2
+
+[node name="MagIcon" type="TextureRect" parent="UI/GunStats"]
+texture_filter = 1
+texture_repeat = 1
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("11_0j3y0")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="GunMags" type="Label" parent="UI/GunStats"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "3"
+
+[node name="MagRIcon" type="TextureRect" parent="UI/GunStats"]
+texture_filter = 1
+texture_repeat = 1
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("7_sd7qy")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="GunMagR" type="Label" parent="UI/GunStats"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "3/8"
+
+[node name="OutsideUI" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1024.0
+offset_bottom = 640.0
+
+[node name="ObjectiveContainer" type="TabContainer" parent="UI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -159.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Current Objective" type="RichTextLabel" parent="UI/ObjectiveContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]Kill them [i]all...[/i][/b]"
+
+[node name="ItemsContainer" type="TabContainer" parent="UI"]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_top = -160.0
-offset_right = 400.0
+offset_right = 300.0
 offset_bottom = -1.0
 grow_vertical = 0
 size_flags_vertical = 4
 current_tab = 1
 
-[node name="Weapon" type="PanelContainer" parent="UI/TabContainer"]
+[node name="Weapon" type="PanelContainer" parent="UI/ItemsContainer"]
 visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_sg5bv")
 
-[node name="GunTexture" type="TextureRect" parent="UI/TabContainer/Weapon"]
+[node name="GunTexture" type="TextureRect" parent="UI/ItemsContainer/Weapon"]
 texture_filter = 1
 texture_repeat = 1
-custom_minimum_size = Vector2(128, 64)
+custom_minimum_size = Vector2(96, 48)
 layout_mode = 2
 size_flags_horizontal = 0
 texture = ExtResource("8_qkjni")
 expand_mode = 5
 stretch_mode = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/TabContainer/Weapon"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/ItemsContainer/Weapon"]
 layout_mode = 2
 size_flags_horizontal = 8
 alignment = 1
 
-[node name="GunName" type="Label" parent="UI/TabContainer/Weapon/VBoxContainer"]
+[node name="GunName" type="Label" parent="UI/ItemsContainer/Weapon/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 12
 text = "L&S Shortarm 7+1 Round"
 
-[node name="GunDamage" type="Label" parent="UI/TabContainer/Weapon/VBoxContainer"]
+[node name="GunDamage" type="Label" parent="UI/ItemsContainer/Weapon/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 12
 text = "Damage Multiplier: 0.5x"
 
-[node name="GunFireRate" type="Label" parent="UI/TabContainer/Weapon/VBoxContainer"]
+[node name="GunFireRate" type="Label" parent="UI/ItemsContainer/Weapon/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 12
 text = "Shots per Burst: 1"
 
-[node name="GunBurstCount" type="Label" parent="UI/TabContainer/Weapon/VBoxContainer"]
+[node name="GunBurstCount" type="Label" parent="UI/ItemsContainer/Weapon/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 12
 text = "Bursts per Trigger Pull: 1"
 
-[node name="Ammo" type="PanelContainer" parent="UI/TabContainer"]
+[node name="Ammo" type="PanelContainer" parent="UI/ItemsContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_sg5bv")
 
-[node name="AmmoTexture" type="TextureRect" parent="UI/TabContainer/Ammo"]
+[node name="AmmoTexture" type="TextureRect" parent="UI/ItemsContainer/Ammo"]
 texture_filter = 1
 texture_repeat = 1
-custom_minimum_size = Vector2(128, 64)
+custom_minimum_size = Vector2(96, 48)
 layout_mode = 2
 size_flags_horizontal = 0
 texture = ExtResource("7_sd7qy")
 expand_mode = 5
 stretch_mode = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/TabContainer/Ammo"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/ItemsContainer/Ammo"]
 layout_mode = 2
 size_flags_horizontal = 8
 alignment = 1
 
-[node name="AmmoName" type="Label" parent="UI/TabContainer/Ammo/VBoxContainer"]
+[node name="AmmoName" type="Label" parent="UI/ItemsContainer/Ammo/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 12
 text = "9x9mm Parabellum"
 
-[node name="AmmoDamage" type="Label" parent="UI/TabContainer/Ammo/VBoxContainer"]
+[node name="AmmoDamage" type="Label" parent="UI/ItemsContainer/Ammo/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 12
 text = "Damage: 10hp"
 
-[node name="AmmoPenetrates" type="Label" parent="UI/TabContainer/Ammo/VBoxContainer"]
+[node name="AmmoPenetrates" type="Label" parent="UI/ItemsContainer/Ammo/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 12
 text = "Non-Penetrative"
 
-[node name="AmmoBounces" type="Label" parent="UI/TabContainer/Ammo/VBoxContainer"]
+[node name="AmmoBounces" type="Label" parent="UI/ItemsContainer/Ammo/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 12
 text = "Non-Bouncing
 "
 
-[node name="WaitCursorSprite" type="AnimatedSprite2D" parent="."]
+[node name="GameOver" type="CanvasLayer" parent="."]
 visible = false
-position = Vector2(-48, 42)
-sprite_frames = SubResource("SpriteFrames_tn4i4")
-autoplay = "default"
 
-[node name="CursorScript" type="Node" parent="."]
-script = ExtResource("6_hi3wt")
+[node name="ColorRect" type="ColorRect" parent="GameOver"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.160784, 0.160784, 0.160784, 0.290196)
+
+[node name="Label" type="Label" parent="GameOver"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -102.5
+offset_top = -33.5
+offset_right = 102.5
+offset_bottom = 33.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_gtotw")
+theme_override_font_sizes/font_size = 48
+text = "You Died"
+
+[connection signal="mouse_entered" from="UI/OutsideUI" to="UI" method="ui_mouse_exited"]
+[connection signal="mouse_exited" from="UI/OutsideUI" to="UI" method="ui_mouse_entered"]
+[connection signal="tab_hovered" from="UI/ObjectiveContainer" to="UI" method="_on_tab_hovered"]
+[connection signal="tab_hovered" from="UI/ItemsContainer" to="UI" method="_on_tab_hovered"]

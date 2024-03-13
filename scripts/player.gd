@@ -2,16 +2,26 @@ extends Node2D
 
 @onready var tile_map = get_node("/root/Game/%TileMap")
 @onready var cursor_script = get_node("/root/Game/CursorScript")
+@onready var max_health = health
+@onready var ui = get_node("/root/Game/UI")
 
 @export var health = 100.0
-@onready var max_health = health
 
 signal player_damaged
+signal ammo_counts_updated
+signal gun_updated
+signal ammo_updated
 
 var is_turn = true
+var can_shoot = true
+var in_mag = 6
+var mags_held = 2
 
 func _ready():
 	%Healthbar.value = health
+	ui.connect("ui_entered", disable_firing)
+	ui.connect("ui_exited", enable_firing)
+	change_gun("res://scenes/guns/burst_rifle.tscn")
 
 func _physics_process(_delta):
 	$RotationPoint.look_at(get_global_mouse_position())
@@ -30,10 +40,19 @@ func _input(event):
 		has_moved = move(Vector2.LEFT)
 	elif event.is_action_pressed("move_right"):
 		has_moved = move(Vector2.RIGHT)
+	elif event.is_action_pressed("reload"):
+		if mags_held > 0:
+			mags_held -= 1
+			in_mag = get_gun().mag_size
+			ammo_counts_changed()
+			has_moved = true
 	elif event.is_released() && event.is_action_released("shoot"):
-		$RotationPoint/Gun.shoot()
-		has_moved = true
-		has_shot = true
+		if(can_shoot and in_mag > 0):
+			get_gun().shoot()
+			has_moved = true
+			has_shot = true
+			in_mag -= 1
+			ammo_counts_changed()
 	else:
 		# We don't want to bother continuing or process a turn so exit here
 		return
@@ -77,10 +96,40 @@ func hit(hit_data):
 	emit_signal("player_damaged", health / max_health)
 	if health <= 0:
 		game_over()
-	
+
+func ui_refresh():
+	ammo_counts_changed()
+	update_healthbar()
+
 func update_healthbar():
 	%Healthbar.value = health
 	
+func disable_firing():
+	can_shoot = false
+	
+func enable_firing():
+	can_shoot = true
+	
+func ammo_counts_changed():
+	emit_signal("ammo_counts_updated", {
+		"in_mag": in_mag,
+		"mag_size": get_gun().mag_size,
+		"mags_held": mags_held,
+	})
+	
+func change_gun(new_gun_scene: String):
+	var gun_scene = load(new_gun_scene)
+	var gun = gun_scene.instantiate()
+	get_gun().name = "Gun_R"
+	$RotationPoint/Gun_R.queue_free()
+	$RotationPoint.add_child(gun)
+	gun.name = "Gun"
+	emit_signal("gun_updated", gun.get_gun_stats())
+	ui_refresh()
+	
+func get_gun():
+	return $RotationPoint/Gun
+
 func game_over():
 	queue_free()
 	get_tree().paused = true

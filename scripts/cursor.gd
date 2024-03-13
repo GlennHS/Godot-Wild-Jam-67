@@ -12,7 +12,7 @@ func _ready():
 
 var current_cursor = "base"
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if current_cursor == "wait":
 		Input.set_custom_mouse_cursor(SFL.get_frame_texture("default", wait_cursor.frame), Input.CURSOR_ARROW, Vector2(16, 16) / 2)
 	else:

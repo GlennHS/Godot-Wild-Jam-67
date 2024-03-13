@@ -10,6 +10,7 @@ var shots_per_burst = 1
 var spread = 15
 var damage_multiplier = 1
 var gun_name = "gun"
+var mag_size = 8
 
 var bullet_scene = preload("res://scenes/bullets/bullet.tscn")
 var can_shoot = true
@@ -36,8 +37,10 @@ func fire_bullet(bullet_rotation):
 	get_tree().root.add_child(b)
 
 
+# Enable this if you want to babysit the player...
 func _on_fire_point_body_entered(_body):
-	can_shoot = false
+	#can_shoot = false
+	pass
 
 func _on_fire_point_body_exited(_body):
 	can_shoot = true
@@ -48,3 +51,6 @@ func change_ammo(ammo_scene):
 	
 func get_texture():
 	return $Sprite2D.texture
+	
+func get_gun_stats():
+	return {}

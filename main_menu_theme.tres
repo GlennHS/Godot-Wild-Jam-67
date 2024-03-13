@@ -1,4 +1,6 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://dq0youvb741i2"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://dq0youvb741i2"]
+
+[ext_resource type="Texture2D" uid="uid://e6g0k4ennub3" path="res://sprites/ui_sprites/slider.png" id="1_5lx8a"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4rled"]
 content_margin_left = 6.0
@@ -64,6 +66,19 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pkqyr"]
+bg_color = Color(0.592157, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lsl4k"]
+bg_color = Color(0.592157, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t0sr8"]
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+
 [resource]
 Button/colors/font_color = Color(0.592157, 0, 0, 1)
 Button/colors/font_focus_color = Color(0.592157, 0, 0, 1)
@@ -75,6 +90,11 @@ Button/styles/focus = SubResource("StyleBoxFlat_4rled")
 Button/styles/hover = SubResource("StyleBoxFlat_8rkko")
 Button/styles/normal = SubResource("StyleBoxFlat_i75mn")
 Button/styles/pressed = SubResource("StyleBoxFlat_l24e7")
+HSlider/icons/grabber = ExtResource("1_5lx8a")
+HSlider/icons/grabber_highlight = ExtResource("1_5lx8a")
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_pkqyr")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_lsl4k")
+HSlider/styles/slider = SubResource("StyleBoxFlat_t0sr8")
 Label/colors/font_color = Color(0.858824, 0.141176, 0.0705882, 1)
 Label/colors/font_outline_color = Color(1, 1, 1, 1)
 Label/constants/outline_size = 4

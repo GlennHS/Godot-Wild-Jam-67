@@ -17,6 +17,11 @@ boot_splash/image="res://splash.png"
 config/icon="res://icon.svg"
 boot_splash/minimum_display_time=2000
 
+[autoload]
+
+AudioManager="*res://scenes/autoloads/audio_manager.tscn"
+GlobalVariables="*res://scenes/autoloads/global_variables.tscn"
+
 [display]
 
 window/size/viewport_width=1024
