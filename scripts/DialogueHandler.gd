@@ -70,9 +70,7 @@ func get_current_dialogue():
 
 func update_dialogue_UI():
 	var d: DialogueItem = get_current_dialogue()
-	var image = Image.load_from_file(d.speaker_image_path)
-	var speaker_texture = ImageTexture.create_from_image(image)
 	
 	$DialogueContainer/HBoxContainer/DialogueText.text = d.dialogue
 	$DialogueContainer/HBoxContainer/VBoxContainer/SpeakerName.text = d.speaker_name
-	$DialogueContainer/HBoxContainer/VBoxContainer/SpeakerImage.texture = speaker_texture
+	$DialogueContainer/HBoxContainer/VBoxContainer/SpeakerImage.texture = load(d.speaker_image_path)

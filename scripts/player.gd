@@ -21,7 +21,7 @@ func _ready():
 	%Healthbar.value = health
 	ui.connect("ui_entered", disable_firing)
 	ui.connect("ui_exited", enable_firing)
-	change_gun("res://scenes/guns/burst_rifle.tscn")
+	change_gun("res://scenes/guns/pistol.tscn")
 
 func _physics_process(_delta):
 	$RotationPoint.look_at(get_global_mouse_position())
@@ -100,29 +100,31 @@ func hit(hit_data):
 func get_light_radius() -> float:
 	return $PointLight2D.texture.get_width() * $PointLight2D.scale.x / 2
 
-func ui_refresh():
+func ui_refresh() -> void:
 	ammo_counts_changed()
 	update_healthbar()
 
-func update_healthbar():
+func update_healthbar() -> void:
 	%Healthbar.value = health
 	
-func disable_firing():
+func disable_firing() -> void:
 	can_shoot = false
 	
-func enable_firing():
+func enable_firing() -> void:
 	can_shoot = true
 	
-func ammo_counts_changed():
+func ammo_counts_changed() -> void:
 	emit_signal("ammo_counts_updated", {
 		"in_mag": in_mag,
 		"mag_size": get_gun().mag_size,
 		"mags_held": mags_held,
 	})
 	
-func change_gun(new_gun_scene: String):
+func change_gun(new_gun_scene: String) -> void:
 	var gun_scene = load(new_gun_scene)
-	var gun = gun_scene.instantiate()
+	var gun: Node2D = gun_scene.instantiate()
+	var saved_offset = get_gun().position
+	gun.position = saved_offset
 	get_gun().name = "Gun_R"
 	$RotationPoint/Gun_R.queue_free()
 	$RotationPoint.add_child(gun)
@@ -130,7 +132,7 @@ func change_gun(new_gun_scene: String):
 	emit_signal("gun_updated", gun.get_gun_stats())
 	ui_refresh()
 	
-func get_gun():
+func get_gun() -> Node2D:
 	return $RotationPoint/Gun
 
 func game_over():

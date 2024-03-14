@@ -16,14 +16,14 @@ script = ExtResource("1_c1sec")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_p1x6a")
 
 [node name="RotationPoint" type="Node2D" parent="."]
 position = Vector2(-4, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="RotationPoint"]
+[node name="PlayerSprite" type="Sprite2D" parent="RotationPoint"]
 texture_filter = 1
 texture_repeat = 1
 position = Vector2(3, 4.76837e-07)
