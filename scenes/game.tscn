@@ -441,6 +441,7 @@ text = "You Died"
 color = Color(0.282353, 0.282353, 0.282353, 1)
 
 [node name="Dialogue" type="CanvasLayer" parent="."]
+process_mode = 3
 script = ExtResource("15_tdc4x")
 
 [node name="DialogueContainer" type="PanelContainer" parent="Dialogue"]
