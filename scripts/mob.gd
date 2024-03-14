@@ -83,10 +83,8 @@ func check_if_visible() -> bool:
 	var query = PhysicsRayQueryParameters2D.create(global_position, player.global_position)
 	var result = space_state.intersect_ray(query)
 	if result and not result.collider.get("name") == "Player":
-		print("Mob Visible")
 		return false
 	else:
-		print("Mob Invisible")
 		return true
 
 func move(direction: Vector2):
