@@ -1,44 +1,35 @@
 extends CanvasLayer
+class_name DialogueHandler
 
-class DialogueItem:
-	var dialogue: String = ""
-	var speaker_name: String = ""
-	var speaker_image_path: String = ""
+signal dialogue_ended
 	
-func new_dialogue_item(obj) -> DialogueItem:
-	var r = DialogueItem.new()
-	r.dialogue = obj.dialogue
-	r.speaker_name = obj.speaker_name
-	r.speaker_image_path = obj.speaker_image_path
-	return r
-
 var current_dialogue: Array[DialogueItem] = [
-	new_dialogue_item({
+	DialogueItem.new({
 		"dialogue": "This is some dialogue.",
 		"speaker_name": "CHARLES",
 		"speaker_image_path": "res://sprites/ui_sprites/player_faces/headshot.png"
 	}),
-	new_dialogue_item({
+	DialogueItem.new({
 		"dialogue": "Here's more dialogue.",
 		"speaker_name": "CHARLES",
 		"speaker_image_path": "res://sprites/ui_sprites/player_faces/headshot.png"
 	}),
-	new_dialogue_item({
+	DialogueItem.new({
 		"dialogue": "And even more!",
 		"speaker_name": "CHARLES",
 		"speaker_image_path": "res://sprites/ui_sprites/player_faces/headshot.png"
 	}),
-	new_dialogue_item({
+	DialogueItem.new({
 		"dialogue": "",
 		"speaker_name": "CHARLES",
 		"speaker_image_path": "res://sprites/ui_sprites/player_faces/headshot.png"
 	}),
-	new_dialogue_item({
+	DialogueItem.new({
 		"dialogue": "Did you like that empty dialogue?",
 		"speaker_name": "CHARLES",
 		"speaker_image_path": "res://sprites/ui_sprites/player_faces/headshot.png"
 	}),
-	new_dialogue_item({
+	DialogueItem.new({
 		"dialogue": "No? Well too bad.",
 		"speaker_name": "CHARLES",
 		"speaker_image_path": "res://sprites/ui_sprites/player_faces/headshot.png"
@@ -47,7 +38,7 @@ var current_dialogue: Array[DialogueItem] = [
 var position_in_dialogue = 0
 
 func _ready():
-	show_dialogue()
+	hide_dialogue()
 
 func _input(event: InputEvent) -> void:
 	if InputEventMouseButton and event.is_pressed():
@@ -67,9 +58,12 @@ func progress_dialogue():
 		update_dialogue_UI()
 	else:
 		hide_dialogue()
+		emit_signal("dialogue_ended")
 	
 func set_dialogue_stream(new_dialogue_stream):
-	pass
+	current_dialogue = new_dialogue_stream
+	position_in_dialogue = 0
+	update_dialogue_UI()
 	
 func get_current_dialogue():
 	return current_dialogue[position_in_dialogue]

@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=3 uid="uid://byxv808mtt5wp"]
+
+[ext_resource type="Script" path="res://scripts/DialogueHandler.gd" id="1_04w45"]
+[ext_resource type="Texture2D" uid="uid://cosuivmj0r3i8" path="res://sprites/ui_sprites/player_faces/headshot.png" id="2_1qpcf"]
+[ext_resource type="Theme" uid="uid://cpxca4qeaggbs" path="res://ui_theme.tres" id="3_0i675"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bsyo7"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.266667, 0.117647, 0.0431373, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_it0fm"]
+subpixel_positioning = 0
+
+[sub_resource type="FontVariation" id="FontVariation_xmrg8"]
+base_font = SubResource("SystemFont_it0fm")
+variation_embolden = 1.31
+spacing_glyph = 1
+
+[node name="Dialogue" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_04w45")
+
+[node name="DialogueContainer" type="PanelContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -200.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bsyo7")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DialogueContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DialogueContainer/HBoxContainer"]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+
+[node name="SpeakerImage" type="TextureRect" parent="DialogueContainer/HBoxContainer/VBoxContainer"]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 2
+texture = ExtResource("2_1qpcf")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="SpeakerName" type="Label" parent="DialogueContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_xmrg8")
+text = "CHARLES
+"
+horizontal_alignment = 1
+
+[node name="DialogueText" type="RichTextLabel" parent="DialogueContainer/HBoxContainer"]
+custom_minimum_size = Vector2(780, 0)
+layout_mode = 2
+theme = ExtResource("3_0i675")
+bbcode_enabled = true
+text = "Lorem ipsum dolor sit amet consectetur adipiscing elit non nobis domine"
