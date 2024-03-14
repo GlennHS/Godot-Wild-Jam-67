@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bhfisvccwil76"]
+[gd_scene load_steps=22 format=3 uid="uid://bhfisvccwil76"]
 
 [ext_resource type="TileSet" uid="uid://cxnvxncv43seq" path="res://tilesets/tileset.tres" id="1_p6xl5"]
 [ext_resource type="Texture2D" uid="uid://dgpc25ra2pwpi" path="res://sprites/ui_sprites/parallax.png" id="1_qqslt"]
@@ -14,7 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://bqlfpgkhe6tqm" path="res://sprites/ui_sprites/mag.png" id="11_0j3y0"]
 [ext_resource type="Texture2D" uid="uid://bf2sdtn2dm2je" path="res://sprites/ui_sprites/health.png" id="11_key6g"]
 [ext_resource type="Texture2D" uid="uid://d0satjrrcn5u3" path="res://sprites/ui_sprites/shield.png" id="12_fjobt"]
-[ext_resource type="PackedScene" uid="uid://byxv808mtt5wp" path="res://scenes/autoloads/dialogue.tscn" id="15_qg7gv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iw2ae"]
 atlas = ExtResource("5_wjcs7")
@@ -425,8 +424,6 @@ text = "You Died"
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.282353, 0.282353, 0.282353, 1)
-
-[node name="Dialogue" parent="." instance=ExtResource("15_qg7gv")]
 
 [connection signal="mouse_entered" from="UI/OutsideUI" to="UI" method="ui_mouse_exited"]
 [connection signal="mouse_exited" from="UI/OutsideUI" to="UI" method="ui_mouse_entered"]

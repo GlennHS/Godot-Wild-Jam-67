@@ -31,8 +31,11 @@ var dialogue: Array[DialogueItem] = [
 ]
 
 func _ready() -> void:
-	dialogue_handler.set_dialogue_stream(dialogue)
-	dialogue_handler.show_dialogue()
-	await dialogue_handler.dialogue_ended
+	if(not OS.is_debug_build()):
+		dialogue_handler.set_dialogue_stream(dialogue)
+		dialogue_handler.show_dialogue()
+		await dialogue_handler.dialogue_ended
+	else:
+		await get_tree().create_timer(0.1).timeout # Godot throws a hissy if you immediately jump scene
 	get_tree().change_scene_to_file("res://scenes/game.tscn")
 	pass
