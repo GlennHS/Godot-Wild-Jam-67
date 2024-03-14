@@ -13,6 +13,7 @@ class_name Mob
 func _ready():
 	$Healthbar.value = health
 	$Healthbar.max_value = health
+	visible = check_if_visible()
 
 func _physics_process(_delta):
 	await get_tree().physics_frame
@@ -22,6 +23,16 @@ func _physics_process(_delta):
 func get_directions(x: Vector2, y: Vector2) -> Array[Vector2]:
 	# Calculate the vector from X to Y
 	var v = y - x
+	if v.x == 0:
+		if v.y > 0:
+			return [Vector2.UP]
+		else:
+			return [Vector2.UP]
+	if v.y == 0:
+		if v.x > 0:
+			return [Vector2.RIGHT]
+		else:
+			return [Vector2.LEFT]
 	
 	if(v.x > 0 and v.y < 0):
 		if(abs(v.x) > abs(v.y)):
@@ -58,9 +69,25 @@ func execute_turn():
 			move(dirs_to_move[0])
 		elif(not move(dirs_to_move[0])):
 			move(dirs_to_move[1])
-				
+		
+		visible = check_if_visible()
 		move_pause.start()
 		await move_pause.timeout
+
+func check_if_visible() -> bool:
+	var distance_to_player = global_position.distance_to(player.global_position)
+	if distance_to_player > player.get_light_radius():
+		return false
+	var space_state = get_world_2d().direct_space_state
+	# use global coordinates, not local to node
+	var query = PhysicsRayQueryParameters2D.create(global_position, player.global_position)
+	var result = space_state.intersect_ray(query)
+	if result and not result.collider.get("name") == "Player":
+		print("Mob Visible")
+		return false
+	else:
+		print("Mob Invisible")
+		return true
 
 func move(direction: Vector2):
 	# Get current tile Vector2i

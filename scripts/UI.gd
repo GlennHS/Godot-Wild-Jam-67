@@ -16,13 +16,13 @@ func _ready():
 	player.connect("gun_updated", ui_update_gun)
 	player.connect("ammo_counts_updated", ui_update_ammo_counts)
 	gun.connect("ammo_changed", ui_update_ammo)
+	player.ui_refresh() # Call here to avoid race condition with signal connects above
 
 func set_face_background_alpha(percent: float):
 	var c: Color = fb.get_color()
 	fb.set_color(Color(c.r, c.g, c.b, percent))
 	
 func ui_update_gun(gun_stats):
-	print("Yeeeeah")
 	#var gun_texture: TextureRect = ui.get_node("WeaponContainer/GunRect/GunTexture")
 	#gun_texture.texture = gun_stats.image
 	pass
@@ -34,7 +34,6 @@ func ui_update_player_stats(player_stats):
 	pass
 	
 func ui_update_ammo_counts(ammo_data):
-	print(ammo_data)
 	mags_remaining_ui.text = str(ammo_data.mags_held)
 	in_mag_ui.text = str(ammo_data.in_mag, "/", ammo_data.mag_size)
 	pass

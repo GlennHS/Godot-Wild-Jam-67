@@ -77,8 +77,24 @@ text = "Menu Background
 [node name="Attribution" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "(https://unsplash.com/@parsamiir)
+text = "Parsa Mir on Unsplash"
+
+[node name="Category5" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_uu20s")
+theme_override_font_sizes/font_size = 20
+text = "Art"
+
+[node name="SubCategory5" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Game Background
 "
+
+[node name="Attribution5" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Andres Siimon on Unsplash"
 
 [node name="Category2" type="Label" parent="GridContainer"]
 layout_mode = 2
@@ -114,6 +130,24 @@ text = "Sprite Artwork
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Savannah Edwards
+"
+
+[node name="Category6" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_uu20s")
+theme_override_font_sizes/font_size = 20
+text = "Art"
+
+[node name="SubCategory6" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Tilemap Artwork
+"
+
+[node name="Attribution6" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "https://foozlecc.itch.io/
 "
 
 [node name="Category4" type="Label" parent="GridContainer"]

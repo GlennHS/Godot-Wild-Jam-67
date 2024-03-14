@@ -97,6 +97,9 @@ func hit(hit_data):
 	if health <= 0:
 		game_over()
 
+func get_light_radius() -> float:
+	return $PointLight2D.texture.get_width() * $PointLight2D.scale.x / 2
+
 func ui_refresh():
 	ammo_counts_changed()
 	update_healthbar()

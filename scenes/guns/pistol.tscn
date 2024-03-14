@@ -19,6 +19,7 @@ texture = SubResource("PlaceholderTexture2D_5sg1s")
 
 [node name="FirePointCollision" type="Area2D" parent="."]
 position = Vector2(7, 0)
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FirePointCollision"]
 shape = SubResource("RectangleShape2D_o2bsr")
