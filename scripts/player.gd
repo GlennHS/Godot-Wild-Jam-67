@@ -9,9 +9,12 @@ class_name Player
 @export var health = 100.0
 
 signal player_damaged
+
+# UI Signals
 signal ammo_counts_updated
 signal gun_updated
 signal ammo_updated
+signal player_stats_updated
 
 var is_turn = true
 var can_shoot = true
@@ -62,6 +65,7 @@ func _input(event):
 	if not has_moved:
 		return
 	is_turn = false
+	refresh_ui()
 	if has_shot:
 		cursor_script.set_cursor("wait")
 		$TurnWaitTimer.start()
@@ -73,6 +77,7 @@ func _input(event):
 			mob.execute_turn()
 	
 	is_turn = true
+	refresh_ui()
 
 func move(direction: Vector2):
 	# Get current tile Vector2i
@@ -110,8 +115,9 @@ func hit(hit_data):
 func get_light_radius() -> float:
 	return $PointLight2D.texture.get_width() * $PointLight2D.scale.x / 2
 
-func ui_refresh() -> void:
+func refresh_ui() -> void:
 	ammo_counts_changed()
+	player_stats_changed()
 	update_healthbar()
 
 func update_healthbar() -> void:
@@ -124,23 +130,38 @@ func enable_firing() -> void:
 	can_shoot = true
 	
 func ammo_counts_changed() -> void:
-	emit_signal("ammo_counts_updated", {
-		"in_mag": in_mag,
-		"mag_size": get_gun().mag_size,
-		"mags_held": mags_held,
-	})
+	emit_signal("ammo_counts_updated", get_ammo_held_stats())
 	
+func player_stats_changed() -> void:
+	emit_signal("player_stats_updated", get_player_stats())
+	
+func get_player_stats() -> PlayerStats:
+	return PlayerStats.new(
+		health,
+		0,
+		0,
+	)
+
+func get_ammo_held_stats() -> AmmoHeldStats:
+	return AmmoHeldStats.new(
+		in_mag,
+		get_gun().mag_size,
+		mags_held
+	)
+
 func change_gun(new_gun_scene: String) -> void:
-	var gun_scene = load(new_gun_scene)
-	var gun: Node2D = gun_scene.instantiate()
-	var saved_offset = get_gun().position
+	var gun_scene: Resource = load(new_gun_scene)
+	var gun: Gun = gun_scene.instantiate()
+	var saved_offset: Vector2 = get_gun().position
 	gun.position = saved_offset
 	get_gun().name = "Gun_R"
 	$RotationPoint/Gun_R.queue_free()
 	$RotationPoint.add_child(gun)
 	gun.name = "Gun"
-	emit_signal("gun_updated", gun.get_gun_stats())
-	ui_refresh()
+	var gun_stats = gun.get_gun_stats()
+	emit_signal("gun_updated", gun_stats)
+	in_mag = gun_stats.mag_size
+	refresh_ui()
 	
 func get_gun() -> Node2D:
 	return $RotationPoint/Gun

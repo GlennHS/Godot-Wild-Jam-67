@@ -5,3 +5,5 @@ func _ready():
 	damage_multiplier = 0.5
 	bullets_per_shot = 1
 	shots_per_burst = 1
+	gun_name = "L&S Shortarm 7+1 Round"
+	mag_size = 8

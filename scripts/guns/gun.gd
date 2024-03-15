@@ -5,12 +5,14 @@ class_name Gun
 signal gun_fired
 signal ammo_changed
 
-var bullets_per_shot = 1
-var shots_per_burst = 1
-var spread = 15
-var damage_multiplier = 1
-var gun_name = "gun"
-var mag_size = 8
+var bullets_per_shot := 1
+var shots_per_burst := 1
+var spread := 1.0
+var damage_multiplier := 1.0
+var gun_name := "Gun"
+var mag_size := 1
+
+@onready var stats = get_gun_stats()
 
 var bullet_scene = preload("res://scenes/bullets/bullet.tscn")
 var can_shoot = true
@@ -53,4 +55,11 @@ func get_texture():
 	return $Sprite2D.texture
 	
 func get_gun_stats():
-	return {}
+	return GunStats.new(
+		bullets_per_shot,
+		shots_per_burst,
+		spread,
+		damage_multiplier,
+		gun_name,
+		mag_size,
+	)
