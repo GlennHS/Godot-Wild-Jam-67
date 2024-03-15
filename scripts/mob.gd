@@ -5,10 +5,11 @@ class_name Mob
 @onready var tile_map: TileMap = get_node("/root/Game/%TileMap")
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var move_pause: Timer = $MovePause
-@onready var player: CharacterBody2D = get_tree().root.get_node("Game/Player")
+@onready var player: Player = get_tree().root.get_node("Game/Player")
 
 @export var health = 30
 @export var move_speed = 1
+@export var damage_dealt = 10
 
 func _ready():
 	$Healthbar.value = health
@@ -59,12 +60,20 @@ func get_directions(x: Vector2, y: Vector2) -> Array[Vector2]:
 	
 func execute_turn():
 	for i in move_speed:
+		if global_position.distance_to(player.global_position) <= 16:
+			print("Mob Name: ", name, " attacking...")
+			print("This mob's visible property is ", visible)
+			player.hit({
+				"damage": damage_dealt
+			})
+			return
 		# Get next point in navigation
 		var next_pos: Vector2 = nav_agent.get_next_path_position()
 		
 		# calculate the cardinal direction
 		var dirs_to_move: Array[Vector2] = get_directions(global_position, next_pos)
 		# move
+		# NOTE: It is fully possible a mob won't move if they're surrounded by other mobs
 		if(dirs_to_move.size() == 1):
 			move(dirs_to_move[0])
 		elif(not move(dirs_to_move[0])):
@@ -91,6 +100,7 @@ func move(direction: Vector2):
 	# Get current tile Vector2i
 	var current_tile: Vector2i = tile_map.local_to_map(global_position)
 	# Get target tile Vector2i
+	@warning_ignore("narrowing_conversion")
 	var target_tile : Vector2i = Vector2i(
 		current_tile.x + direction.x,
 		current_tile.y + direction.y,
@@ -98,9 +108,14 @@ func move(direction: Vector2):
 	# Get custom data from the target tile
 	var tile_data: TileData = tile_map.get_cell_tile_data(0, target_tile)
 	
-	# Should NEVER happen. Check navigation layers in nav agent if so
 	if tile_data.get_custom_data("walkable") == false:
 		return false
+		
+	for mob: Mob in get_tree().get_nodes_in_group("mobs"):
+		@warning_ignore("narrowing_conversion")
+		var mob_tile = tile_map.local_to_map(mob.global_position)
+		if target_tile == mob_tile:
+			return false
 	
 	global_position = tile_map.map_to_local(target_tile)
 	return true
@@ -110,6 +125,9 @@ func hit(hit_data):
 	update_healthbar()
 	if health <= 0:
 		queue_free()
+		
+func attack() -> void:
+	return
 	
 func update_healthbar():
 	$Healthbar.value = health
