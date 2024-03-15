@@ -25,7 +25,8 @@ func _ready():
 	change_gun("res://scenes/guns/pistol.tscn")
 
 func _physics_process(_delta):
-	$RotationPoint.look_at(get_global_mouse_position())
+	if health > 0:
+		$RotationPoint.look_at(get_global_mouse_position())
 
 func _input(event):
 	if not is_turn:
