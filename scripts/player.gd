@@ -87,7 +87,13 @@ func move(direction: Vector2):
 	
 	if tile_data.get_custom_data("walkable") == false:
 		return false
-		
+	
+	for mob: Mob in get_tree().get_nodes_in_group("mobs"):
+		@warning_ignore("narrowing_conversion")
+		var mob_tile = tile_map.local_to_map(mob.global_position)
+		if target_tile == mob_tile:
+			return false
+	
 	# Move player
 	global_position = tile_map.map_to_local(target_tile)
 	return true
