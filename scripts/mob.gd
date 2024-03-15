@@ -73,6 +73,7 @@ func execute_turn():
 		# calculate the cardinal direction
 		var dirs_to_move: Array[Vector2] = get_directions(global_position, next_pos)
 		# move
+		# NOTE: It is fully possible a mob won't move if they're surrounded by other mobs
 		if(dirs_to_move.size() == 1):
 			move(dirs_to_move[0])
 		elif(not move(dirs_to_move[0])):
@@ -107,9 +108,14 @@ func move(direction: Vector2):
 	# Get custom data from the target tile
 	var tile_data: TileData = tile_map.get_cell_tile_data(0, target_tile)
 	
-	# Should NEVER happen. Check navigation layers in nav agent if so
 	if tile_data.get_custom_data("walkable") == false:
 		return false
+		
+	for mob: Mob in get_tree().get_nodes_in_group("mobs"):
+		@warning_ignore("narrowing_conversion")
+		var mob_tile = tile_map.local_to_map(mob.global_position)
+		if target_tile == mob_tile:
+			return false
 	
 	global_position = tile_map.map_to_local(target_tile)
 	return true
