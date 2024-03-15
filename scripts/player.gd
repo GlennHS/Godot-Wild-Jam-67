@@ -1,4 +1,5 @@
 extends Node2D
+class_name Player
 
 @onready var tile_map = get_node("/root/Game/%TileMap")
 @onready var cursor_script = get_node("/root/Game/CursorScript")
@@ -76,6 +77,7 @@ func move(direction: Vector2):
 	# Get current tile Vector2i
 	var current_tile: Vector2i = tile_map.local_to_map(global_position)
 	# Get target tile Vector2i
+	@warning_ignore("narrowing_conversion")
 	var target_tile : Vector2i = Vector2i(
 		current_tile.x + direction.x,
 		current_tile.y + direction.y,
@@ -91,6 +93,7 @@ func move(direction: Vector2):
 	return true
 	
 func hit(hit_data):
+	print("Player health: ", health)
 	health -= hit_data.damage
 	update_healthbar()
 	emit_signal("player_damaged", health / max_health)
@@ -136,6 +139,9 @@ func get_gun() -> Node2D:
 	return $RotationPoint/Gun
 
 func game_over():
-	queue_free()
+	get_tree().paused = true
+	$RotationPoint/PlayerSprite.texture = load("res://sprites/tombstone.png")
+	$RotationPoint.rotation_degrees = 270
+	$RotationPoint/PlayerSprite.position = Vector2.ZERO
 	get_tree().paused = true
 	get_node("/root/Game/GameOver").show()

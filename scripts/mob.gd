@@ -5,10 +5,11 @@ class_name Mob
 @onready var tile_map: TileMap = get_node("/root/Game/%TileMap")
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var move_pause: Timer = $MovePause
-@onready var player: CharacterBody2D = get_tree().root.get_node("Game/Player")
+@onready var player: Player = get_tree().root.get_node("Game/Player")
 
 @export var health = 30
 @export var move_speed = 1
+@export var damage_dealt = 10
 
 func _ready():
 	$Healthbar.value = health
@@ -59,6 +60,13 @@ func get_directions(x: Vector2, y: Vector2) -> Array[Vector2]:
 	
 func execute_turn():
 	for i in move_speed:
+		if global_position.distance_to(player.global_position) <= 16:
+			print("Mob Name: ", name, " attacking...")
+			print("This mob's visible property is ", visible)
+			player.hit({
+				"damage": damage_dealt
+			})
+			return
 		# Get next point in navigation
 		var next_pos: Vector2 = nav_agent.get_next_path_position()
 		
@@ -91,6 +99,7 @@ func move(direction: Vector2):
 	# Get current tile Vector2i
 	var current_tile: Vector2i = tile_map.local_to_map(global_position)
 	# Get target tile Vector2i
+	@warning_ignore("narrowing_conversion")
 	var target_tile : Vector2i = Vector2i(
 		current_tile.x + direction.x,
 		current_tile.y + direction.y,
@@ -110,6 +119,9 @@ func hit(hit_data):
 	update_healthbar()
 	if health <= 0:
 		queue_free()
+		
+func attack() -> void:
+	return
 	
 func update_healthbar():
 	$Healthbar.value = health
