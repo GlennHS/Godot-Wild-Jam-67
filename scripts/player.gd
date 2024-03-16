@@ -5,6 +5,7 @@ class_name Player
 @onready var cursor_script = get_node("/root/Level/CursorScript")
 @onready var max_health: int = health
 @onready var ui: UIScript = get_node("/root/UI")
+@onready var level: Level = get_node("/root/Level")
 
 @export var health = 100.0
 
@@ -100,6 +101,17 @@ func move(direction: Vector2):
 		current_tile.x + direction.x,
 		current_tile.y + direction.y,
 	)
+	
+	var target_tile_global = tile_map.map_to_local(target_tile)
+	if level.check_door_at_location(target_tile_global):
+		var target_door = level.get_door_at_location(target_tile_global)
+		if target_door is Door:
+			var key_needed = target_door.get_needed_key_name()
+			
+			for item in inventory:
+				if item.item_name == key_needed:
+					level.remove_door(target_door)
+			return false
 	# Get custom data from the target tile
 	var tile_data: TileData = tile_map.get_cell_tile_data(0, target_tile)
 	
@@ -115,7 +127,10 @@ func move(direction: Vector2):
 	# Move player
 	global_position = tile_map.map_to_local(target_tile)
 	return true
-	
+
+func try_open_door() -> bool:
+	return false
+
 func hit(hit_data):
 	health -= hit_data.damage
 	update_healthbar()
