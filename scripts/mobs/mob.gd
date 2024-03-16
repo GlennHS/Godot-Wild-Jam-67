@@ -78,6 +78,8 @@ func execute_turn():
 			move(dirs_to_move[1])
 		
 		visible = check_if_visible()
+		#if check_if_visible():
+			#$RotationPoint/Sprite2D.modulate = Color.RED
 		move_pause.start()
 		await move_pause.timeout
 
@@ -88,6 +90,10 @@ func check_if_visible() -> bool:
 	var space_state = get_world_2d().direct_space_state
 	# use global coordinates, not local to node
 	var query = PhysicsRayQueryParameters2D.create(global_position, player.global_position)
+	var nodes_to_exclude: Array[RID] = [self]
+	for mob: Mob in get_tree().get_nodes_in_group("mobs"):
+		nodes_to_exclude.append(mob.get_rid())
+	query.exclude = nodes_to_exclude
 	var result = space_state.intersect_ray(query)
 	if result and not result.collider.get("name") == "Player":
 		return false
