@@ -20,9 +20,7 @@ func hide_tooltip() -> void:
 	$Tooltip.hide()
 
 func _on_mouse_entered() -> void:
-	print("Yoooo")
 	show_tooltip()
 
 func _on_mouse_exited() -> void:
-	print("Noooo")
 	hide_tooltip()

@@ -62,7 +62,6 @@ func ui_update_inventory_items(inventory: Array[InventoryItem]) -> void:
 	for item: InventoryItem in inventory:
 		var prefab: InventoryItemScene = item_scene.instantiate()
 		prefab.setup(item)
-		print("Adding Item: ", item.item_name, " to inv")
 		$ItemsContainer/Inventory.add_child(prefab)
 	pass
 
@@ -81,7 +80,3 @@ func hide_ui() -> void:
 func show_ui() -> void:
 	prep_ui()
 	visible = true
-
-
-func _on_button_pressed() -> void:
-	print("BUTTON PRESSED")

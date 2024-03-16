@@ -34,10 +34,10 @@ func _ready():
 	if OS.is_debug_build():
 		change_gun("res://scenes/guns/pistol.tscn")
 		var test_item = InventoryItem.new(
-			"Test",
-			"This is a test of the EAS",
+			"Pistol",
+			"It's a pistol. It shoots things. Hope you can aim",
 			"res://sprites/ui_sprites/guns/pistol.png",
-			"Key",
+			"Gun",
 		)
 		inventory_add_item(test_item)
 
