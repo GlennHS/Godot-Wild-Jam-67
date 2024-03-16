@@ -3,8 +3,8 @@ class_name UIScript
 
 @onready var ui: CanvasLayer = get_node("/root/UI")
 @onready var fb: ColorRect = get_node("FacePanel/FaceBackground")
-@onready var in_mag_ui: Label = $GunStats/GunMags
-@onready var mags_remaining_ui: Label = $GunStats/GunMagR
+@onready var in_mag_ui: Label = $GunStats/InMagText
+@onready var mags_remaining_ui: Label = $GunStats/MagsHeldText
 @onready var player_health_ui: Label = $PlayerStats/PlayerHealth
 @onready var player_shield_ui: Label = $PlayerStats/PlayerShield
 
@@ -20,7 +20,6 @@ func _ready() -> void:
 	emit_signal("ui_ready")
 	
 func prep_ui() -> void:
-	print("UI Prepped")
 	player = get_node("/root/Level/Player")
 	gun = player.get_gun()
 	
@@ -36,10 +35,9 @@ func set_face_background_alpha(percent: float) -> void:
 	fb.set_color(Color(c.r, c.g, c.b, percent))
 	
 func ui_update_gun(gun_stats: GunStats) -> void:
-	print("Triggered")
 	var gun_texture: TextureRect = $ItemsContainer/Weapon/GunTexture
 	gun_texture.texture = load(gun_stats.gun_image_path)
-	$ItemsContainer/Weapon/VBoxContainer/GunName.text = gun_stats.name
+	$ItemsContainer/Weapon/VBoxContainer/GunName.text = gun_stats.gun_name
 	$ItemsContainer/Weapon/VBoxContainer/GunDamage.text = str("Damage Multiplier: ", gun_stats.damage_multiplier)
 	$ItemsContainer/Weapon/VBoxContainer/GunFireRate.text = str("Shots per burst: ", gun_stats.bullets_per_shot)
 	$ItemsContainer/Weapon/VBoxContainer/GunBurstCount.text = str("Bursts per trigger pull: ", gun_stats.shots_per_burst)

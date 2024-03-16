@@ -34,7 +34,7 @@ func _physics_process(_delta):
 		$RotationPoint.look_at(get_global_mouse_position())
 
 func _input(event):
-	if not is_turn:
+	if not is_turn or health <= 0:
 		return
 	
 	var has_moved = false
@@ -108,11 +108,11 @@ func move(direction: Vector2):
 	return true
 	
 func hit(hit_data):
-	print("Player health: ", health)
 	health -= hit_data.damage
 	update_healthbar()
 	emit_signal("player_damaged", health / max_health)
 	if health <= 0:
+		health = 0
 		game_over()
 
 func get_light_radius() -> float:
@@ -139,7 +139,6 @@ func player_stats_changed() -> void:
 	emit_signal("player_stats_updated", get_player_stats())
 	
 func gun_changed() -> void:
-	print("Player>Gun Updated")
 	emit_signal("gun_updated", get_gun().get_gun_stats())
 	
 func get_player_stats() -> PlayerStats:
@@ -179,5 +178,4 @@ func game_over():
 	$RotationPoint/PlayerSprite.texture = load("res://sprites/tombstone.png")
 	$RotationPoint.rotation_degrees = 270
 	$RotationPoint/PlayerSprite.position = Vector2.ZERO
-	get_tree().paused = true
 	get_node("/root/Level/GameOver").show()
