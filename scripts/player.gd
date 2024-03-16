@@ -15,11 +15,13 @@ signal ammo_counts_updated
 signal gun_updated
 signal ammo_updated
 signal player_stats_updated
+signal inventory_updated
 
-var is_turn = true
-var can_shoot = true
-var in_mag = 6
-var mags_held = 2
+var is_turn := true
+var can_shoot := true
+var in_mag: int = 6
+var mags_held: int = 2
+var inventory: Array[InventoryItem] = []
 
 func _ready():
 	%Healthbar.value = health
@@ -27,7 +29,17 @@ func _ready():
 	ui.show_ui()
 	ui.connect("ui_entered", disable_firing)
 	ui.connect("ui_exited", enable_firing)
-	change_gun("res://scenes/guns/pistol.tscn")
+	
+	# Debugging stuff
+	if OS.is_debug_build():
+		change_gun("res://scenes/guns/pistol.tscn")
+		var test_item = InventoryItem.new(
+			"Test",
+			"This is a test of the EAS",
+			"res://sprites/ui_sprites/guns/pistol.png",
+			"Key",
+		)
+		inventory_add_item(test_item)
 
 func _physics_process(_delta):
 	if health > 0:
@@ -172,6 +184,31 @@ func change_gun(new_gun_scene: String) -> void:
 	
 func get_gun() -> Node2D:
 	return $RotationPoint/Gun
+
+func inventory_add_item(item: InventoryItem) -> void:
+	if not inventory_check_for_item_by_name(item.item_name):
+		inventory.append(item)
+		emit_signal("inventory_updated", inventory)
+	
+func inventory_check_for_item_by_name(item_name: String) -> bool:
+	return get_inventory_item_index_by_name(item_name) != -1
+	
+func get_inventory_item_index_by_name(item_name: String) -> int:
+	var i: int = 0
+	for item: InventoryItem in inventory:
+		if item.item_name == item_name:
+			return i
+		else:
+			i += 1
+	return -1
+	
+func inventory_remove_item(item_name: String) -> bool:
+	if inventory_check_for_item_by_name(item_name):
+		var index = get_inventory_item_index_by_name(item_name)
+		inventory.remove_at(index)
+		return true
+	else:
+		return false
 
 func game_over():
 	get_tree().paused = true
