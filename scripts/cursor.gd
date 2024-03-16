@@ -6,7 +6,7 @@ extends Node
 @onready var SFL: SpriteFrames
 
 func _ready():
-	wait_cursor = get_node("/root/Game/WaitCursorSprite")
+	wait_cursor = get_node("/root/Level/WaitCursorSprite")
 	SFL = wait_cursor.sprite_frames
 	
 

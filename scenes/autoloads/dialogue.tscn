@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://byxv808mtt5wp"]
 
-[ext_resource type="Script" path="res://scripts/DialogueHandler.gd" id="1_04w45"]
+[ext_resource type="Script" path="res://scripts/autoloads/DialogueHandler.gd" id="1_04w45"]
 [ext_resource type="Texture2D" uid="uid://cosuivmj0r3i8" path="res://sprites/ui_sprites/player_faces/headshot.png" id="2_1qpcf"]
 [ext_resource type="Theme" uid="uid://cpxca4qeaggbs" path="res://ui_theme.tres" id="3_0i675"]
 

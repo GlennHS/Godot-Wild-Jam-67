@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b71y0pckvvcnh"]
 
-[ext_resource type="Script" path="res://scripts/GlobalVariables.gd" id="1_rv311"]
+[ext_resource type="Script" path="res://scripts/autoloads/GlobalVariables.gd" id="1_rv311"]
 
 [node name="GlobalVariables" type="Node"]
 script = ExtResource("1_rv311")

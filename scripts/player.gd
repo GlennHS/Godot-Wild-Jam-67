@@ -1,10 +1,10 @@
 extends Node2D
 class_name Player
 
-@onready var tile_map = get_node("/root/Game/%TileMap")
-@onready var cursor_script = get_node("/root/Game/CursorScript")
-@onready var max_health = health
-@onready var ui = get_node("/root/Game/UI")
+@onready var tile_map: TileMap = get_node("/root/Level/%TileMap")
+@onready var cursor_script = get_node("/root/Level/CursorScript")
+@onready var max_health: int = health
+@onready var ui: UIScript = get_node("/root/UI")
 
 @export var health = 100.0
 
@@ -23,6 +23,8 @@ var mags_held = 2
 
 func _ready():
 	%Healthbar.value = health
+	
+	ui.show_ui()
 	ui.connect("ui_entered", disable_firing)
 	ui.connect("ui_exited", enable_firing)
 	change_gun("res://scenes/guns/pistol.tscn")
@@ -66,6 +68,7 @@ func _input(event):
 		return
 	is_turn = false
 	refresh_ui()
+	
 	if has_shot:
 		cursor_script.set_cursor("wait")
 		$TurnWaitTimer.start()
@@ -135,6 +138,10 @@ func ammo_counts_changed() -> void:
 func player_stats_changed() -> void:
 	emit_signal("player_stats_updated", get_player_stats())
 	
+func gun_changed() -> void:
+	print("Player>Gun Updated")
+	emit_signal("gun_updated", get_gun().get_gun_stats())
+	
 func get_player_stats() -> PlayerStats:
 	return PlayerStats.new(
 		health,
@@ -150,17 +157,18 @@ func get_ammo_held_stats() -> AmmoHeldStats:
 	)
 
 func change_gun(new_gun_scene: String) -> void:
-	var gun_scene: Resource = load(new_gun_scene)
-	var gun: Gun = gun_scene.instantiate()
-	var saved_offset: Vector2 = get_gun().position
+	var gun_scene: Resource = load(new_gun_scene) # Load the new Gun's scene
+	var gun: Gun = gun_scene.instantiate() # Instantiate the new Gun
+	var saved_offset: Vector2 = get_gun().position # Remember the offset for the gun so it looks normal
 	gun.position = saved_offset
-	get_gun().name = "Gun_R"
-	$RotationPoint/Gun_R.queue_free()
+	
+	$RotationPoint/Gun.name = "GunR" # Do this otherwise new gun gets called "Gun2" and breaks everything
+	$RotationPoint/GunR.queue_free()
 	$RotationPoint.add_child(gun)
 	gun.name = "Gun"
-	var gun_stats = gun.get_gun_stats()
-	emit_signal("gun_updated", gun_stats)
-	in_mag = gun_stats.mag_size
+	
+	in_mag = gun.mag_size
+	gun_changed()
 	refresh_ui()
 	
 func get_gun() -> Node2D:
@@ -172,4 +180,4 @@ func game_over():
 	$RotationPoint.rotation_degrees = 270
 	$RotationPoint/PlayerSprite.position = Vector2.ZERO
 	get_tree().paused = true
-	get_node("/root/Game/GameOver").show()
+	get_node("/root/Level/GameOver").show()

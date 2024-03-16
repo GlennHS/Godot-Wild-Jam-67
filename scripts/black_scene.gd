@@ -31,11 +31,11 @@ var dialogue: Array[DialogueItem] = [
 ]
 
 func _ready() -> void:
-	if(not OS.is_debug_build()):
+	if(not (OS.is_debug_build() and not get_node("/root/GlobalVariables").g_force_prod)):
 		dialogue_handler.set_dialogue_stream(dialogue)
 		dialogue_handler.show_dialogue()
 		await dialogue_handler.dialogue_ended
 	else:
 		await get_tree().create_timer(0.1).timeout # Godot throws a hissy if you immediately jump scene
-	get_tree().change_scene_to_file("res://scenes/game.tscn")
+	get_tree().change_scene_to_file("res://scenes/levels/basement.tscn")
 	pass

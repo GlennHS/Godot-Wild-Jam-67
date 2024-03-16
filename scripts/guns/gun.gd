@@ -32,7 +32,7 @@ func shoot():
 	
 func fire_bullet(bullet_rotation):
 	var b: Node2D = bullet_scene.instantiate()
-	var resulting_rotation = get_node("/root/Game/Player/RotationPoint").rotation_degrees + bullet_rotation
+	var resulting_rotation = get_node("../../RotationPoint").rotation_degrees + bullet_rotation
 	b.start($FirePoint.global_position, resulting_rotation, {
 		"damage_multiplier": damage_multiplier
 	})

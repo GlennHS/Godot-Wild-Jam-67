@@ -6,6 +6,7 @@ var shots_per_burst: int = 1
 var spread: float = 15.0
 var damage_multiplier: float = 1.0
 var gun_name: String = "Gun"
+var gun_image_path: String = "res://sprites/ui_sprites/guns/pistol.png"
 var mag_size: int = 8
 
 func _init(
