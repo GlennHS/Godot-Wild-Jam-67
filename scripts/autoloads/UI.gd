@@ -58,6 +58,8 @@ func ui_update_objective(obj: String) -> void:
 	$"ObjectiveContainer/Current Objective".text = obj
 
 func ui_update_inventory_items(inventory: Array[InventoryItem]) -> void:
+	for child in $ItemsContainer/Inventory.get_children():
+		$ItemsContainer/Inventory.remove_child(child)
 	var item_scene = preload("res://scenes/inventory_item.tscn")
 	for item: InventoryItem in inventory:
 		var prefab: InventoryItemScene = item_scene.instantiate()

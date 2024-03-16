@@ -30,16 +30,13 @@ func _ready():
 	ui.connect("ui_entered", disable_firing)
 	ui.connect("ui_exited", enable_firing)
 	
+	if get_tree().get_nodes_in_group("pickups").size() > 0:
+		for p in get_tree().get_nodes_in_group("pickups"):
+			p.connect("picked_up", inventory_add_item)
+	
 	# Debugging stuff
 	if OS.is_debug_build():
 		change_gun("res://scenes/guns/pistol.tscn")
-		var test_item = InventoryItem.new(
-			"Pistol",
-			"It's a pistol. It shoots things. Hope you can aim",
-			"res://sprites/ui_sprites/guns/pistol.png",
-			"Gun",
-		)
-		inventory_add_item(test_item)
 
 func _physics_process(_delta):
 	if health > 0:
@@ -189,6 +186,7 @@ func inventory_add_item(item: InventoryItem) -> void:
 	if not inventory_check_for_item_by_name(item.item_name):
 		inventory.append(item)
 		emit_signal("inventory_updated", inventory)
+		print("Inventory size: ", inventory.size())
 	
 func inventory_check_for_item_by_name(item_name: String) -> bool:
 	return get_inventory_item_index_by_name(item_name) != -1

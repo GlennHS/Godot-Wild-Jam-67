@@ -26,7 +26,7 @@ func get_directions(x: Vector2, y: Vector2) -> Array[Vector2]:
 	var v = y - x
 	if v.x == 0:
 		if v.y > 0:
-			return [Vector2.UP]
+			return [Vector2.DOWN]
 		else:
 			return [Vector2.UP]
 	if v.y == 0:
