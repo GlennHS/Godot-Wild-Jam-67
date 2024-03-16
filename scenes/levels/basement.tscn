@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bhfisvccwil76"]
+[gd_scene load_steps=18 format=3 uid="uid://bhfisvccwil76"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_1r6aa"]
 [ext_resource type="Texture2D" uid="uid://dgpc25ra2pwpi" path="res://sprites/ui_sprites/parallax.png" id="1_mbiw3"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" path="res://scripts/cursor.gd" id="6_pgx3c"]
 [ext_resource type="PackedScene" uid="uid://dqoqmggwvouxo" path="res://scenes/autoloads/ui.tscn" id="7_yspcn"]
 [ext_resource type="Theme" uid="uid://cpxca4qeaggbs" path="res://ui_theme.tres" id="8_r338l"]
+[ext_resource type="PackedScene" uid="uid://dgaekglpn8w" path="res://scenes/pickup.tscn" id="10_oj412"]
+[ext_resource type="Texture2D" uid="uid://bvsrldv8i0n5g" path="res://sprites/ui_sprites/guns/pistol.png" id="11_2bknm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iw2ae"]
 atlas = ExtResource("5_egojx")
@@ -136,3 +138,17 @@ text = "You Died"
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.282353, 0.282353, 0.282353, 1)
+
+[node name="Item" parent="." instance=ExtResource("10_oj412")]
+position = Vector2(24, 72)
+image = ExtResource("11_2bknm")
+item_name = "New Gun Who Dis"
+item_description = "You used to call me on my Mac-10"
+item_type = "Gun"
+
+[node name="Item2" parent="." instance=ExtResource("10_oj412")]
+position = Vector2(104, 24)
+image = ExtResource("11_2bknm")
+item_name = "Gun 2 - The Sequel"
+item_description = "Sir, there's another gun"
+item_type = "Gun"

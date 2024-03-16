@@ -27,6 +27,7 @@ func prep_ui() -> void:
 	player.connect("gun_updated", ui_update_gun)
 	player.connect("ammo_counts_updated", ui_update_ammo_counts)
 	player.connect("player_stats_updated", ui_update_player_stats)
+	player.connect("inventory_updated", ui_update_inventory_items)
 	gun.connect("ammo_changed", ui_update_ammo)
 	player.refresh_ui() # Call here to avoid race condition with signal connects above
 
@@ -52,6 +53,19 @@ func ui_update_player_stats(player_stats: PlayerStats) -> void:
 func ui_update_ammo_counts(ammo_data: AmmoHeldStats) -> void:
 	mags_remaining_ui.text = str(ammo_data.mags_held)
 	in_mag_ui.text = str(ammo_data.in_mag, "/", ammo_data.mag_size)
+	
+func ui_update_objective(obj: String) -> void:
+	$"ObjectiveContainer/Current Objective".text = obj
+
+func ui_update_inventory_items(inventory: Array[InventoryItem]) -> void:
+	for child in $ItemsContainer/Inventory.get_children():
+		$ItemsContainer/Inventory.remove_child(child)
+	var item_scene = preload("res://scenes/inventory_item.tscn")
+	for item: InventoryItem in inventory:
+		var prefab: InventoryItemScene = item_scene.instantiate()
+		prefab.setup(item)
+		$ItemsContainer/Inventory.add_child(prefab)
+	pass
 
 func ui_mouse_entered() -> void:
 	emit_signal("ui_entered")

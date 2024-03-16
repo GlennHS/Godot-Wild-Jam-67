@@ -8,7 +8,7 @@ size = Vector2(8, 8)
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_grp05"]
 size = Vector2(8, 8)
 
-[node name="Item" type="Area2D"]
+[node name="Item" type="Area2D" groups=["pickups"]]
 collision_layer = 8
 script = ExtResource("1_dn3ie")
 
@@ -17,3 +17,5 @@ shape = SubResource("RectangleShape2D_f8mmx")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("PlaceholderTexture2D_grp05")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
