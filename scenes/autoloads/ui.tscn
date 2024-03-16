@@ -26,6 +26,7 @@ anchor_bottom = 1.0
 offset_top = -128.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 1
 
 [node name="ColorRect" type="ColorRect" parent="MainPanel"]
 layout_mode = 2
@@ -184,9 +185,13 @@ offset_right = 300.0
 offset_bottom = -1.0
 grow_vertical = 0
 size_flags_vertical = 4
+mouse_filter = 2
+current_tab = 2
 
 [node name="Weapon" type="PanelContainer" parent="ItemsContainer"]
+visible = false
 layout_mode = 2
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_sg5bv")
 
 [node name="GunTexture" type="TextureRect" parent="ItemsContainer/Weapon"]
@@ -241,6 +246,7 @@ text = "Bursts per Trigger Pull: 1"
 [node name="Ammo" type="PanelContainer" parent="ItemsContainer"]
 visible = false
 layout_mode = 2
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_sg5bv")
 
 [node name="AmmoTexture" type="TextureRect" parent="ItemsContainer/Ammo"]
@@ -292,6 +298,12 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 12
 text = "Non-Bouncing
 "
+
+[node name="Inventory" type="GridContainer" parent="ItemsContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/h_separation = 20
+columns = 4
 
 [connection signal="mouse_entered" from="OutsideUI" to="." method="ui_mouse_exited"]
 [connection signal="mouse_exited" from="OutsideUI" to="." method="ui_mouse_entered"]

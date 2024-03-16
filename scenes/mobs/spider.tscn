@@ -8,6 +8,8 @@
 size = Vector2(12, 9)
 
 [node name="Spider" type="CharacterBody2D" groups=["mobs"]]
+collision_layer = 4
+collision_mask = 7
 script = ExtResource("1_qetey")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

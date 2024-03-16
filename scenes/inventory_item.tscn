@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5tw511lk87rb"]
+
+[ext_resource type="Script" path="res://scripts/inventory_item.gd" id="1_ortqs"]
+[ext_resource type="Texture2D" uid="uid://bvsrldv8i0n5g" path="res://sprites/ui_sprites/guns/pistol.png" id="1_vlr1b"]
+[ext_resource type="Theme" uid="uid://cpxca4qeaggbs" path="res://ui_theme.tres" id="2_7b2y4"]
+
+[node name="InventoryItem" type="Control"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 50.0
+offset_bottom = 50.0
+script = ExtResource("1_ortqs")
+
+[node name="ImageBG" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="ItemImage" type="TextureRect" parent="ImageBG"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_vlr1b")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Tooltip" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_top = -100.0
+offset_right = 200.0
+
+[node name="Tooltext" type="RichTextLabel" parent="Tooltip"]
+layout_mode = 2
+theme = ExtResource("2_7b2y4")
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "[b]Item Name[/b]
+Item Desc."
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
