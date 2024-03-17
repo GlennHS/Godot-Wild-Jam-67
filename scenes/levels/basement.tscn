@@ -177,6 +177,5 @@ key_needed = "Yellow Key"
 [node name="Item3" parent="." instance=ExtResource("10_oj412")]
 position = Vector2(24, 72)
 image = ExtResource("14_kthhj")
-item_name = "Pistol"
-item_description = "Your trusty sidearm, custom made and never leaves your side. So what's it doing here?..."
+item_name = "Shotgun"
 item_type = "Gun"

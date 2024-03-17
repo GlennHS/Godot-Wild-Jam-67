@@ -42,9 +42,9 @@ func ui_update_held_gun(gun_stats: GunStats) -> void:
 func ui_update_guns(guns: Array[Gun]) -> void:
 	for child in %GunsContainer.get_children():
 		%GunsContainer.remove_child(child)
-	for gun in guns:
+	for _gun in guns:
 		var ui_weapon_scene: UI_Weapon = load("res://scenes/ui_weapon.tscn").instantiate()
-		ui_weapon_scene.prep(gun.get_gun_stats())
+		ui_weapon_scene.prep(_gun.get_gun_stats())
 		%GunsContainer.add_child(ui_weapon_scene)
 
 func ui_update_ammo(ammo_stats) -> void:

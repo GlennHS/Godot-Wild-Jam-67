@@ -44,7 +44,7 @@ func _ready():
 	
 	# Debugging stuff
 	if OS.is_debug_build():
-		picked_item_up(InventoryItem.new("Shotgun", "Desc", "res://sprites/guns/gun.png", "Gun"))
+		picked_item_up(InventoryItem.new("Pistol", "Charles' trusy sidearm, been with him through 20 years of service and never leaves his side. So why is it here?...", "res://sprites/ui_sprites/guns/pistol.png", "Gun"))
 		change_gun("res://scenes/guns/pistol.tscn")
 
 func _physics_process(_delta):
@@ -216,7 +216,9 @@ func picked_item_up(item: InventoryItem) -> void:
 			
 func picked_gun_up(item: InventoryItem) -> void:
 	if not guns_check_for_gun_by_name(item.item_name):
-		guns_held.append(load(GUN_SCENE_MAP[item.item_name]).instantiate())
+		print(GUN_SCENE_MAP[item.item_name])
+		var gun_scene = load(GUN_SCENE_MAP[item.item_name]).instantiate()
+		guns_held.append(gun_scene)
 		emit_signal("guns_held_updated", guns_held)
 	
 func inventory_check_for_item_by_name(item_name: String) -> bool:
