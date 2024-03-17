@@ -23,6 +23,12 @@ var can_shoot := true
 var in_mag: int = 6
 var mags_held: int = 2
 var inventory: Array[InventoryItem] = []
+var guns_held: Array[Gun] = []
+
+const GUN_SCENE_MAP = {
+	"Pistol": "res://scenes/guns/pistol.tscn",
+	"Burst Rifle": "res://scenes/guns/burst_rifle.tscn",
+}
 
 func _ready():
 	%Healthbar.value = health
@@ -33,7 +39,7 @@ func _ready():
 	
 	if get_tree().get_nodes_in_group("pickups").size() > 0:
 		for p in get_tree().get_nodes_in_group("pickups"):
-			p.connect("picked_up", inventory_add_item)
+			p.connect("picked_up", picked_item_up)
 	
 	# Debugging stuff
 	if OS.is_debug_build():
@@ -197,11 +203,18 @@ func change_gun(new_gun_scene: String) -> void:
 func get_gun() -> Node2D:
 	return $RotationPoint/Gun
 
-func inventory_add_item(item: InventoryItem) -> void:
-	if not inventory_check_for_item_by_name(item.item_name):
-		inventory.append(item)
-		emit_signal("inventory_updated", inventory)
-		print("Inventory size: ", inventory.size())
+func picked_item_up(item: InventoryItem) -> void:
+	if item.item_type == "Gun":
+		picked_gun_up(item)
+	elif item.item_type == "Key":
+		if not inventory_check_for_item_by_name(item.item_name):
+			inventory.append(item)
+			emit_signal("inventory_updated", inventory)
+			print("Inventory size: ", inventory.size())
+			
+func picked_gun_up(item: InventoryItem) -> void:
+	if not guns_check_for_gun_by_name(item.item_name):
+		guns_held.append(load(GUN_SCENE_MAP[item.item_name]).instantiate())
 	
 func inventory_check_for_item_by_name(item_name: String) -> bool:
 	return get_inventory_item_index_by_name(item_name) != -1
@@ -222,6 +235,18 @@ func inventory_remove_item(item_name: String) -> bool:
 		return true
 	else:
 		return false
+
+func guns_check_for_gun_by_name(item_name: String) -> bool:
+	return get_inventory_item_index_by_name(item_name) != -1
+
+func get_gun_index_from_guns_by_name(item_name: String) -> int:
+	var i: int = 0
+	for gun: Gun in guns_held:
+		if gun.gun_name == item_name:
+			return i
+		else:
+			i += 1
+	return -1
 
 func game_over():
 	get_tree().paused = true

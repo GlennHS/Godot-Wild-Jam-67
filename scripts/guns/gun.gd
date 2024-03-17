@@ -10,6 +10,7 @@ var shots_per_burst := 1
 var spread := 1.0
 var damage_multiplier := 1.0
 var gun_name := "Gun"
+var gun_display_name := "Gun"
 var mag_size := 1
 
 @onready var stats = get_gun_stats()
@@ -61,5 +62,6 @@ func get_gun_stats():
 		spread,
 		damage_multiplier,
 		gun_name,
+		gun_display_name,
 		mag_size,
 	)

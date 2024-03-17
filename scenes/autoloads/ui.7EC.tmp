@@ -1,0 +1,265 @@
+[gd_scene load_steps=8 format=3 uid="uid://dqoqmggwvouxo"]
+
+[ext_resource type="Script" path="res://scripts/autoloads/UI.gd" id="1_5mung"]
+[ext_resource type="Texture2D" uid="uid://cosuivmj0r3i8" path="res://sprites/ui_sprites/player_faces/headshot.png" id="2_2e0m4"]
+[ext_resource type="Texture2D" uid="uid://bf2sdtn2dm2je" path="res://sprites/ui_sprites/health.png" id="3_di54m"]
+[ext_resource type="Texture2D" uid="uid://d0satjrrcn5u3" path="res://sprites/ui_sprites/shield.png" id="4_m2ve2"]
+[ext_resource type="Texture2D" uid="uid://bqlfpgkhe6tqm" path="res://sprites/ui_sprites/mag.png" id="5_iwmcu"]
+[ext_resource type="Texture2D" uid="uid://d074k1gfoi32w" path="res://sprites/ui_sprites/bullets/9mm.png" id="6_1s8af"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sg5bv"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(1, 1, 1, 1)
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_5mung")
+
+[node name="MainPanel" type="PanelContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -128.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 1
+
+[node name="ColorRect" type="ColorRect" parent="MainPanel"]
+layout_mode = 2
+color = Color(0.333333, 0.164706, 0.0980392, 0.631373)
+
+[node name="FacePanel" type="PanelContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -128.0
+offset_right = 64.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+
+[node name="RedBackground" type="ColorRect" parent="FacePanel"]
+layout_mode = 2
+color = Color(0.87451, 0.105882, 0.0666667, 1)
+
+[node name="FaceBackground" type="ColorRect" parent="FacePanel"]
+layout_mode = 2
+
+[node name="FaceTexture" type="TextureRect" parent="FacePanel/FaceBackground"]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_right = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_2e0m4")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="PlayerStats" type="GridContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -433.0
+offset_top = -118.0
+offset_right = -304.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/h_separation = 8
+columns = 2
+
+[node name="HealthIcon" type="TextureRect" parent="PlayerStats"]
+texture_filter = 1
+texture_repeat = 1
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("3_di54m")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="PlayerHealth" type="Label" parent="PlayerStats"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "50"
+
+[node name="ShieldIcon" type="TextureRect" parent="PlayerStats"]
+texture_filter = 1
+texture_repeat = 1
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_m2ve2")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="PlayerShield" type="Label" parent="PlayerStats"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "10%"
+
+[node name="GunStats" type="GridContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -714.0
+offset_top = -118.0
+offset_right = -585.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/h_separation = 8
+columns = 2
+
+[node name="MagsHeldIcon" type="TextureRect" parent="GunStats"]
+texture_filter = 1
+texture_repeat = 1
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("5_iwmcu")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="MagsHeldText" type="Label" parent="GunStats"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "3"
+
+[node name="InMagIcon" type="TextureRect" parent="GunStats"]
+texture_filter = 1
+texture_repeat = 1
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("6_1s8af")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="InMagText" type="Label" parent="GunStats"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "3/8"
+
+[node name="OutsideUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1024.0
+offset_bottom = 640.0
+
+[node name="ObjectiveContainer" type="TabContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -159.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Current Objective" type="RichTextLabel" parent="ObjectiveContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]Kill them [i]all...[/i][/b]"
+
+[node name="ItemsContainer" type="TabContainer" parent="."]
+texture_repeat = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -160.0
+offset_right = 300.0
+offset_bottom = -1.0
+grow_vertical = 0
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="Weapon" type="ScrollContainer" parent="ItemsContainer"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ItemsContainer/Weapon"]
+custom_minimum_size = Vector2(300, 125)
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Ammo" type="PanelContainer" parent="ItemsContainer"]
+visible = false
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_sg5bv")
+
+[node name="AmmoTexture" type="TextureRect" parent="ItemsContainer/Ammo"]
+texture_filter = 1
+texture_repeat = 1
+custom_minimum_size = Vector2(96, 48)
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("6_1s8af")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ItemsContainer/Ammo"]
+layout_mode = 2
+size_flags_horizontal = 8
+alignment = 1
+
+[node name="AmmoName" type="Label" parent="ItemsContainer/Ammo/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 12
+text = "9x9mm Parabellum"
+
+[node name="AmmoDamage" type="Label" parent="ItemsContainer/Ammo/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+text = "Damage: 10hp"
+
+[node name="AmmoPenetrates" type="Label" parent="ItemsContainer/Ammo/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+text = "Non-Penetrative"
+
+[node name="AmmoBounces" type="Label" parent="ItemsContainer/Ammo/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+text = "Non-Bouncing
+"
+
+[node name="Inventory" type="GridContainer" parent="ItemsContainer"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/h_separation = 20
+columns = 4
+
+[connection signal="mouse_entered" from="OutsideUI" to="." method="ui_mouse_exited"]
+[connection signal="mouse_exited" from="OutsideUI" to="." method="ui_mouse_entered"]
+[connection signal="tab_hovered" from="ObjectiveContainer" to="." method="_on_tab_hovered"]
+[connection signal="tab_hovered" from="ItemsContainer" to="." method="_on_tab_hovered"]
