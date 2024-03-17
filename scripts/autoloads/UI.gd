@@ -53,6 +53,15 @@ func ui_update_ammo(ammo_stats) -> void:
 func ui_update_player_stats(player_stats: PlayerStats) -> void:
 	player_health_ui.text = str(player_stats.health)
 	player_shield_ui.text = str(player_stats.armor)
+	var face_texture = $FacePanel/FaceBackground/FaceTexture
+	if(player_stats.health < player_stats.max_health * 0.25):
+		face_texture.texture = load("res://sprites/ui_sprites/player_faces/damaged_3.png")
+	elif(player_stats.health < player_stats.max_health * 0.5):
+		face_texture.texture = load("res://sprites/ui_sprites/player_faces/damaged_2.png")
+	elif(player_stats.health < player_stats.max_health * 0.75):
+		face_texture.texture = load("res://sprites/ui_sprites/player_faces/damaged_1.png")
+	else:
+		face_texture.texture = load("res://sprites/ui_sprites/player_faces/headshot.png")
 	
 func ui_update_ammo_counts(ammo_data: AmmoHeldStats) -> void:
 	mags_remaining_ui.text = str(ammo_data.mags_held)
