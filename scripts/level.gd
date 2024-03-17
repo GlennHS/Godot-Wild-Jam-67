@@ -41,6 +41,5 @@ func remove_door(door: Door) -> void:
 	var door_pos_in_TM: Vector2i = %TileMap.local_to_map(door_location)
 	var tilemap_source_id = %TileMap.tile_set.get_source_id(0)
 	%TileMap.set_cell(0, door_pos_in_TM, tilemap_source_id, OPEN_DOOR_ATLAS_COORDS)
-	print(door_pos_in_TM)
 	door.unlock_door()
 	set_doors()

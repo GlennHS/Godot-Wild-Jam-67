@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=3 uid="uid://dwpxggxl8xlng"]
+
+[ext_resource type="Script" path="res://scripts/mobs/rat.gd" id="1_nqh02"]
+[ext_resource type="Texture2D" uid="uid://cqk2kdd5lp7vp" path="res://sprites/mobs/rat_infested.png" id="2_en37g"]
+[ext_resource type="Texture2D" uid="uid://cbst44uwm40au" path="res://sprites/mobs/rat_dead.png" id="2_tdqx4"]
+[ext_resource type="Theme" uid="uid://cpxca4qeaggbs" path="res://ui_theme.tres" id="3_5hwqy"]
+[ext_resource type="AudioStream" uid="uid://c2aaogfjs0cu7" path="res://audio/sfx/enemyKilled.wav" id="4_i43ba"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p1x6a"]
+size = Vector2(14, 14)
+
+[node name="Rat" type="CharacterBody2D" groups=["mobs"]]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_nqh02")
+health = 40
+move_speed = 2
+damage_dealt = 15
+dead_texture = ExtResource("2_tdqx4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_p1x6a")
+
+[node name="RotationPoint" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="RotationPoint"]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(-3.55271e-15, 0)
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("2_en37g")
+
+[node name="Healthbar" type="ProgressBar" parent="."]
+texture_filter = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -7.0
+offset_top = -9.0
+offset_right = 8.0
+offset_bottom = -5.0
+grow_horizontal = 2
+theme = ExtResource("3_5hwqy")
+value = 50.0
+show_percentage = false
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 16.0
+navigation_layers = 3
+debug_path_custom_point_size = 8.76
+
+[node name="MovePause" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="KilledAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_i43ba")
+bus = &"SFX"

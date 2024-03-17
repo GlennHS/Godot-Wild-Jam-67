@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://c3i1dmkgbr7ff"]
+
+[ext_resource type="Texture2D" uid="uid://d00mlpawcigon" path="res://sprites/guns/mp5.png" id="1_7sehd"]
+[ext_resource type="Script" path="res://scripts/guns/mp5.gd" id="1_mrgii"]
+[ext_resource type="AudioStream" uid="uid://bvyswy47ykh3n" path="res://audio/sfx/shotgun.wav" id="3_oyctk"]
+[ext_resource type="AudioStream" uid="uid://1akm30qo3s1f" path="res://audio/sfx/reload.wav" id="4_abu4d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o2bsr"]
+size = Vector2(1, 1)
+
+[node name="MP5" type="Node2D"]
+script = ExtResource("1_mrgii")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 1
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("1_7sehd")
+
+[node name="FirePointCollision" type="Area2D" parent="."]
+position = Vector2(10, 0)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FirePointCollision"]
+shape = SubResource("RectangleShape2D_o2bsr")
+
+[node name="FirePoint" type="Marker2D" parent="."]
+position = Vector2(8, 0)
+
+[node name="BurstTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_oyctk")
+volume_db = -8.33
+bus = &"SFX"
+
+[node name="ReloadSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_abu4d")
+volume_db = -8.615
+bus = &"SFX"
+
+[connection signal="body_entered" from="FirePointCollision" to="." method="_on_fire_point_body_entered"]
+[connection signal="body_exited" from="FirePointCollision" to="." method="_on_fire_point_body_exited"]

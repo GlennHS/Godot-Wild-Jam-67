@@ -23,5 +23,9 @@ func _on_credits_pressed():
 	get_tree().change_scene_to_file("res://scenes/menu_derived/credits.tscn")
 
 
+func _on_help_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/menu_derived/help.tscn")
+
 func _on_quit_pressed():
 	get_tree().quit()
+

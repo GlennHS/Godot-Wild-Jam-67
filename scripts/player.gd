@@ -9,6 +9,8 @@ class_name Player
 
 @export var health = 100.0
 
+var shotgun = InventoryItem.new("Shotgun", "", "res://sprites/ui_sprites/guns/shotgun.png", "Gun")
+
 signal player_damaged
 
 # UI Signals
@@ -29,6 +31,7 @@ var guns_held: Array[Gun] = []
 const GUN_SCENE_MAP = {
 	"Pistol": "res://scenes/guns/pistol.tscn",
 	"Shotgun": "res://scenes/guns/shotgun.tscn",
+	"MP5": "res://scenes/guns/mp5.tscn",
 }
 
 func _ready():
@@ -88,7 +91,7 @@ func _input(event):
 	is_turn = false
 	refresh_ui()
 	
-	if has_shot:
+	if has_shot or has_moved:
 		cursor_script.set_cursor("wait")
 		$TurnWaitTimer.start()
 		await $TurnWaitTimer.timeout
@@ -97,6 +100,11 @@ func _input(event):
 	for mob in get_tree().get_nodes_in_group("mobs"):
 		if mob.has_method("execute_turn"):
 			mob.execute_turn()
+	
+	if get_tree().get_nodes_in_group("pickups").size() > 0:
+		for p in get_tree().get_nodes_in_group("pickups"):
+			if not p.is_connected("picked_up", picked_item_up):
+				p.connect("picked_up", picked_item_up)
 	
 	is_turn = true
 	refresh_ui()
@@ -146,6 +154,8 @@ func hit(hit_data):
 	health -= hit_data.damage
 	update_healthbar()
 	emit_signal("player_damaged", health / max_health)
+	emit_signal("player_stats_updated", get_player_stats())
+	$HurtSound.play()
 	if health <= 0:
 		health = 0
 		game_over()
@@ -229,7 +239,7 @@ func picked_item_up(item: InventoryItem) -> void:
 			
 func picked_gun_up(item: InventoryItem) -> void:
 	if not guns_check_for_gun_by_name(item.item_name):
-		var gun_scene = load(GUN_SCENE_MAP[item.item_name]).instantiate()
+		var gun_scene: Gun = load(GUN_SCENE_MAP[item.item_name]).instantiate()
 		guns_held.append(gun_scene)
 		emit_signal("guns_held_updated", guns_held)
 	

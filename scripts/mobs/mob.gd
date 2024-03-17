@@ -10,6 +10,7 @@ class_name Mob
 @export var health = 30
 @export var move_speed = 1
 @export var damage_dealt = 10
+@export var dead_texture: Texture = load("res://sprites/spider_dead.png")
 
 var target_unreachable = false
 
@@ -84,7 +85,7 @@ func execute_turn():
 		else:
 			move([Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT][randi_range(0, 3)])
 		
-		visible = check_if_visible() or true
+		visible = check_if_visible()
 		#if check_if_visible():
 			#$RotationPoint/Sprite2D.modulate = Color.RED
 		move_pause.start()
@@ -142,8 +143,9 @@ func hit(hit_data):
 		
 func death():
 	health = 0
-	$RotationPoint/Sprite2D.texture = load("res://sprites/spider_dead.png")
+	$RotationPoint/Sprite2D.texture = dead_texture
 	$CollisionShape2D.disabled = true
+	$Healthbar.visible = false
 	$KilledAudio.play()
 		
 func attack() -> void:

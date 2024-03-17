@@ -34,10 +34,12 @@ one_shot = true
 [node name="ShootSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_d3hnn")
 volume_db = -8.0
+bus = &"SFX"
 
 [node name="ReloadSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_klyxf")
 volume_db = -8.0
+bus = &"SFX"
 
 [connection signal="body_entered" from="FirePointCollision" to="." method="_on_fire_point_body_entered"]
 [connection signal="body_exited" from="FirePointCollision" to="." method="_on_fire_point_body_exited"]

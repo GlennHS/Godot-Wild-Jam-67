@@ -1,0 +1,66 @@
+[gd_scene load_steps=10 format=3 uid="uid://d0uu6u6n7evma"]
+
+[ext_resource type="Script" path="res://scripts/mobs/grunt.gd" id="1_ry5ab"]
+[ext_resource type="AudioStream" uid="uid://t3m2g13877ky" path="res://audio/music/warped_fight.wav" id="2_pplr4"]
+[ext_resource type="Texture2D" uid="uid://dffwbr0bn6ap8" path="res://sprites/mobs/grunt_dead.png" id="2_vla71"]
+[ext_resource type="PackedScene" uid="uid://bj7fm5g3p6daa" path="res://scenes/purple_key.tscn" id="3_epgxn"]
+[ext_resource type="Texture2D" uid="uid://mvfpq1dhm8w7" path="res://sprites/mobs/grunt.png" id="3_o2bop"]
+[ext_resource type="Theme" uid="uid://cpxca4qeaggbs" path="res://ui_theme.tres" id="4_wgf4d"]
+[ext_resource type="AudioStream" uid="uid://c2aaogfjs0cu7" path="res://audio/sfx/enemyKilled.wav" id="5_2uql0"]
+[ext_resource type="AudioStream" uid="uid://dkuvyxwjk20bv" path="res://audio/sfx/scream.wav" id="6_s6o8r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p1x6a"]
+size = Vector2(16, 16)
+
+[node name="Grunt" type="CharacterBody2D" groups=["mobs"]]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_ry5ab")
+boss_music = ExtResource("2_pplr4")
+drop = ExtResource("3_epgxn")
+health = 150
+damage_dealt = 25
+dead_texture = ExtResource("2_vla71")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_p1x6a")
+
+[node name="RotationPoint" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="RotationPoint"]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(-3.55271e-15, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_o2bop")
+
+[node name="Healthbar" type="ProgressBar" parent="."]
+texture_filter = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -7.0
+offset_top = -9.0
+offset_right = 8.0
+offset_bottom = -5.0
+grow_horizontal = 2
+theme = ExtResource("4_wgf4d")
+value = 50.0
+show_percentage = false
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 16.0
+navigation_layers = 3
+debug_path_custom_point_size = 8.76
+
+[node name="MovePause" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="KilledAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_2uql0")
+bus = &"SFX"
+
+[node name="ScreamAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_s6o8r")
+bus = &"SFX"

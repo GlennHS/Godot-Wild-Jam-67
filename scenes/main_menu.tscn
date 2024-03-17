@@ -68,6 +68,11 @@ layout_mode = 2
 theme = ExtResource("3_v187j")
 text = "Options"
 
+[node name="Help" type="Button" parent="Buttons"]
+layout_mode = 2
+theme = ExtResource("3_v187j")
+text = "Help"
+
 [node name="Credits" type="Button" parent="Buttons"]
 layout_mode = 2
 theme = ExtResource("3_v187j")
@@ -90,5 +95,6 @@ color = Color(0, 0, 0, 1)
 
 [connection signal="pressed" from="Buttons/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="Buttons/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="Buttons/Help" to="." method="_on_help_pressed"]
 [connection signal="pressed" from="Buttons/Credits" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="Buttons/Quit" to="." method="_on_quit_pressed"]

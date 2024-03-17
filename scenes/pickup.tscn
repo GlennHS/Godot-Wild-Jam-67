@@ -21,5 +21,6 @@ texture = SubResource("PlaceholderTexture2D_grp05")
 
 [node name="PickupAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_7ifj5")
+bus = &"SFX"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

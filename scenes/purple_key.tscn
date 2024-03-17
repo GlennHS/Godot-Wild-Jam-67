@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://bj7fm5g3p6daa"]
+
+[ext_resource type="Script" path="res://scripts/pickup.gd" id="1_ggudf"]
+[ext_resource type="Texture2D" uid="uid://c04wdhxoijjyh" path="res://sprites/inventory_items/key_purple.png" id="2_0vyu5"]
+[ext_resource type="AudioStream" uid="uid://d3p70fgoy6rhm" path="res://audio/sfx/pickupItem.wav" id="2_437w8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f8mmx"]
+size = Vector2(8, 8)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_grp05"]
+size = Vector2(8, 8)
+
+[node name="Item" type="Area2D" groups=["pickups"]]
+collision_layer = 8
+script = ExtResource("1_ggudf")
+image = ExtResource("2_0vyu5")
+item_name = "Purple Key"
+item_description = "It's still covered in goo and something writhing around..."
+item_type = "Key"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_f8mmx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_grp05")
+
+[node name="PickupAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_437w8")
+bus = &"SFX"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

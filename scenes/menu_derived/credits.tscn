@@ -184,6 +184,22 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Kevin MacLeod (incompetech.com)"
 
+[node name="Category8" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_uu20s")
+theme_override_font_sizes/font_size = 20
+text = "Sound"
+
+[node name="SubCategory8" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Music"
+
+[node name="Attribution8" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "gis_sweden on Freesound.org"
+
 [node name="Back" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 7
