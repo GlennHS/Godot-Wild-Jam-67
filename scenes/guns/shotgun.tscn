@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://mis8ugrv334t"]
 
 [ext_resource type="Script" path="res://scripts/guns/shotgun.gd" id="1_07g8x"]
-[ext_resource type="Texture2D" uid="uid://cnk5wr17qk8j2" path="res://sprites/guns/gun.png" id="2_5kxji"]
+[ext_resource type="Texture2D" uid="uid://bc2sbppc73pka" path="res://sprites/guns/shotgun.png" id="2_wdldu"]
 [ext_resource type="AudioStream" uid="uid://bvyswy47ykh3n" path="res://audio/sfx/shotgun.wav" id="3_lsauo"]
 [ext_resource type="AudioStream" uid="uid://1akm30qo3s1f" path="res://audio/sfx/reload.wav" id="4_1x3nv"]
 
@@ -14,8 +14,8 @@ script = ExtResource("1_07g8x")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 texture_repeat = 1
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("2_5kxji")
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_wdldu")
 
 [node name="FirePointCollision" type="Area2D" parent="."]
 position = Vector2(10, 0)

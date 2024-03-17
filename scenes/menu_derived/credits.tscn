@@ -51,14 +51,17 @@ horizontal_alignment = 1
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -232.0
-offset_top = 300.0
-offset_right = 232.0
-offset_bottom = 377.0
+anchor_bottom = 0.5
+offset_left = -303.0
+offset_top = -110.0
+offset_right = 303.0
+offset_bottom = 110.0
 grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/h_separation = 14
 columns = 3
 
@@ -129,8 +132,7 @@ text = "Sprite Artwork
 [node name="Attribution3" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Savannah Edwards
-"
+text = "Mack (bigmack.itch.io)"
 
 [node name="Category6" type="Label" parent="GridContainer"]
 layout_mode = 2
@@ -165,6 +167,22 @@ text = "Music / SFX"
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Glenn Hamilton-Smith"
+
+[node name="Category7" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_uu20s")
+theme_override_font_sizes/font_size = 20
+text = "Sound"
+
+[node name="SubCategory7" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Music"
+
+[node name="Attribution7" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Kevin MacLeod (incompetech.com)"
 
 [node name="Back" type="Button" parent="."]
 layout_mode = 1

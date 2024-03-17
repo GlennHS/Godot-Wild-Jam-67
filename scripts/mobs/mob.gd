@@ -11,6 +11,8 @@ class_name Mob
 @export var move_speed = 1
 @export var damage_dealt = 10
 
+var target_unreachable = false
+
 func _ready():
 	$Healthbar.value = health
 	$Healthbar.max_value = health
@@ -19,7 +21,6 @@ func _ready():
 func _physics_process(_delta):
 	await get_tree().physics_frame
 	nav_agent.target_position = player.global_position
-	nav_agent.is_target_reachable()
 
 func get_directions(x: Vector2, y: Vector2) -> Array[Vector2]:
 	# Calculate the vector from X to Y
@@ -61,24 +62,29 @@ func get_directions(x: Vector2, y: Vector2) -> Array[Vector2]:
 func execute_turn():
 	if health <= 0:
 		return
+		
+	target_unreachable = !nav_agent.is_target_reachable()
 	
 	for i in move_speed:
 		if global_position.distance_to(player.global_position) <= 16:
 			attack()
 			return
 		# Get next point in navigation
-		var next_pos: Vector2 = nav_agent.get_next_path_position()
+		if not target_unreachable:
+			var next_pos: Vector2 = nav_agent.get_next_path_position()
+			
+			# calculate the cardinal direction
+			var dirs_to_move: Array[Vector2] = get_directions(global_position, next_pos)
+			# move
+			# NOTE: It is fully possible a mob won't move if they're surrounded by other mobs
+			if(dirs_to_move.size() == 1):
+				move(dirs_to_move[0])
+			elif(not move(dirs_to_move[0])):
+				move(dirs_to_move[1])
+		else:
+			move([Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT][randi_range(0, 3)])
 		
-		# calculate the cardinal direction
-		var dirs_to_move: Array[Vector2] = get_directions(global_position, next_pos)
-		# move
-		# NOTE: It is fully possible a mob won't move if they're surrounded by other mobs
-		if(dirs_to_move.size() == 1):
-			move(dirs_to_move[0])
-		elif(not move(dirs_to_move[0])):
-			move(dirs_to_move[1])
-		
-		visible = check_if_visible()
+		visible = check_if_visible() or true
 		#if check_if_visible():
 			#$RotationPoint/Sprite2D.modulate = Color.RED
 		move_pause.start()
