@@ -7,6 +7,8 @@ var doors: Array[Door] = []
 
 func _ready() -> void:
 	set_doors()
+	get_node("/root/AudioManager/MusicPlayer").stream = load("res://audio/music/SCP-x6x.mp3")
+	get_node("/root/AudioManager/MusicPlayer").play()
 
 func set_doors() -> void:
 	doors = []

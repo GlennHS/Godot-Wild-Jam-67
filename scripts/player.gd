@@ -70,7 +70,6 @@ func _input(event):
 			mags_held -= 1
 			get_gun().reload()
 			in_mag = get_gun().get_ammo_count()
-			print("In Mag: ", in_mag)
 			ammo_counts_changed()
 			has_moved = true
 	elif event.is_released() && event.is_action_released("shoot"):
@@ -83,7 +82,6 @@ func _input(event):
 	else:
 		# We don't want to bother continuing or process a turn so exit here
 		return
-	print("In Mag: ", in_mag)
 	
 	if not has_moved:
 		return
@@ -195,7 +193,6 @@ func get_ammo_held_stats() -> AmmoHeldStats:
 func get_gun_by_scene(scene_path: String) -> String:
 	for _name in GUN_SCENE_MAP:
 		if GUN_SCENE_MAP[_name] == scene_path:
-			print(_name)
 			return _name
 	return ""
 
@@ -228,11 +225,9 @@ func picked_item_up(item: InventoryItem) -> void:
 		if not inventory_check_for_item_by_name(item.item_name):
 			inventory.append(item)
 			emit_signal("inventory_updated", inventory)
-			print("Inventory size: ", inventory.size())
 			
 func picked_gun_up(item: InventoryItem) -> void:
 	if not guns_check_for_gun_by_name(item.item_name):
-		print(GUN_SCENE_MAP[item.item_name])
 		var gun_scene = load(GUN_SCENE_MAP[item.item_name]).instantiate()
 		guns_held.append(gun_scene)
 		emit_signal("guns_held_updated", guns_held)

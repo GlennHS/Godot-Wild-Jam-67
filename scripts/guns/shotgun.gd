@@ -2,8 +2,8 @@ extends Gun
 
 func _init() -> void:
 	spread = 60
-	damage_multiplier = 1.5
-	bullets_per_shot = 12
+	damage_multiplier = 1.25
+	bullets_per_shot = 6
 	shots_per_burst = 1
 	gun_name = "Shotgun"
 	gun_image_path = "res://sprites/guns/gun.png"
