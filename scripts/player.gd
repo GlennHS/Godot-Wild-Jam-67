@@ -14,6 +14,7 @@ signal player_damaged
 # UI Signals
 signal ammo_counts_updated
 signal gun_updated
+signal guns_held_updated
 signal ammo_updated
 signal player_stats_updated
 signal inventory_updated
@@ -27,7 +28,7 @@ var guns_held: Array[Gun] = []
 
 const GUN_SCENE_MAP = {
 	"Pistol": "res://scenes/guns/pistol.tscn",
-	"Burst Rifle": "res://scenes/guns/burst_rifle.tscn",
+	"Shotgun": "res://scenes/guns/shotgun.tscn",
 }
 
 func _ready():
@@ -43,6 +44,7 @@ func _ready():
 	
 	# Debugging stuff
 	if OS.is_debug_build():
+		picked_item_up(InventoryItem.new("Shotgun", "Desc", "res://sprites/guns/gun.png", "Gun"))
 		change_gun("res://scenes/guns/pistol.tscn")
 
 func _physics_process(_delta):
@@ -215,6 +217,7 @@ func picked_item_up(item: InventoryItem) -> void:
 func picked_gun_up(item: InventoryItem) -> void:
 	if not guns_check_for_gun_by_name(item.item_name):
 		guns_held.append(load(GUN_SCENE_MAP[item.item_name]).instantiate())
+		emit_signal("guns_held_updated", guns_held)
 	
 func inventory_check_for_item_by_name(item_name: String) -> bool:
 	return get_inventory_item_index_by_name(item_name) != -1
