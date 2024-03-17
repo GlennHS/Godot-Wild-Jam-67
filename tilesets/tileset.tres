@@ -1804,6 +1804,7 @@ texture = ExtResource("2_4psp4")
 8:12/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 8:12/0/physics_layer_0/angular_velocity = 0.0
 8:12/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+8:12/0/custom_data_1 = true
 
 [resource]
 uv_clipping = true
@@ -1814,6 +1815,6 @@ physics_layer_0/collision_mask = 5
 navigation_layer_0/layers = 1
 custom_data_layer_0/name = "walkable"
 custom_data_layer_0/type = 1
-custom_data_layer_1/name = "transition_to_scene"
-custom_data_layer_1/type = 4
+custom_data_layer_1/name = "is_door"
+custom_data_layer_1/type = 1
 sources/4 = SubResource("TileSetAtlasSource_erjch")
