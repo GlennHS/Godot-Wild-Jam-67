@@ -179,6 +179,7 @@ func gun_changed() -> void:
 func get_player_stats() -> PlayerStats:
 	return PlayerStats.new(
 		health,
+		max_health,
 		0,
 		0,
 	)
