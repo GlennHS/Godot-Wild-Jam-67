@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dqoqmggwvouxo"]
+[gd_scene load_steps=10 format=3 uid="uid://dqoqmggwvouxo"]
 
 [ext_resource type="Script" path="res://scripts/autoloads/UI.gd" id="1_5mung"]
 [ext_resource type="Texture2D" uid="uid://cosuivmj0r3i8" path="res://sprites/ui_sprites/player_faces/headshot.png" id="2_2e0m4"]
@@ -6,7 +6,14 @@
 [ext_resource type="Texture2D" uid="uid://d0satjrrcn5u3" path="res://sprites/ui_sprites/shield.png" id="4_m2ve2"]
 [ext_resource type="Texture2D" uid="uid://bqlfpgkhe6tqm" path="res://sprites/ui_sprites/mag.png" id="5_iwmcu"]
 [ext_resource type="Texture2D" uid="uid://d074k1gfoi32w" path="res://sprites/ui_sprites/bullets/9mm.png" id="6_1s8af"]
-[ext_resource type="Texture2D" uid="uid://bvsrldv8i0n5g" path="res://sprites/ui_sprites/guns/pistol.png" id="7_4ltl4"]
+[ext_resource type="PackedScene" uid="uid://c4cwi0o16sd7t" path="res://scenes/ui_weapon.tscn" id="7_c7y0c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_utgbo"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sg5bv"]
 content_margin_left = 20.0
@@ -186,62 +193,26 @@ offset_bottom = -1.0
 grow_vertical = 0
 size_flags_vertical = 4
 mouse_filter = 2
-current_tab = 2
 
-[node name="Weapon" type="PanelContainer" parent="ItemsContainer"]
-visible = false
+[node name="Weapons" type="PanelContainer" parent="ItemsContainer"]
 layout_mode = 2
-mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_sg5bv")
+theme_override_styles/panel = SubResource("StyleBoxFlat_utgbo")
 
-[node name="GunTexture" type="TextureRect" parent="ItemsContainer/Weapon"]
-texture_filter = 1
-texture_repeat = 1
-custom_minimum_size = Vector2(96, 48)
+[node name="ScrollContainer" type="ScrollContainer" parent="ItemsContainer/Weapons"]
 layout_mode = 2
-size_flags_horizontal = 0
-texture = ExtResource("7_4ltl4")
-expand_mode = 5
-stretch_mode = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ItemsContainer/Weapon"]
+[node name="GunsContainer" type="VBoxContainer" parent="ItemsContainer/Weapons/ScrollContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 110)
 layout_mode = 2
-size_flags_horizontal = 8
+theme_override_constants/separation = 20
 alignment = 1
 
-[node name="GunName" type="Label" parent="ItemsContainer/Weapon/VBoxContainer"]
+[node name="Weapon" parent="ItemsContainer/Weapons/ScrollContainer/GunsContainer" instance=ExtResource("7_c7y0c")]
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 12
-text = "L&S Shortarm 7+1 Round"
 
-[node name="GunDamage" type="Label" parent="ItemsContainer/Weapon/VBoxContainer"]
+[node name="Weapon2" parent="ItemsContainer/Weapons/ScrollContainer/GunsContainer" instance=ExtResource("7_c7y0c")]
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 12
-text = "Damage Multiplier: 0.5x"
-
-[node name="GunFireRate" type="Label" parent="ItemsContainer/Weapon/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 12
-text = "Shots per Burst: 1"
-
-[node name="GunBurstCount" type="Label" parent="ItemsContainer/Weapon/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 12
-text = "Bursts per Trigger Pull: 1"
 
 [node name="Ammo" type="PanelContainer" parent="ItemsContainer"]
 visible = false
@@ -300,6 +271,7 @@ text = "Non-Bouncing
 "
 
 [node name="Inventory" type="GridContainer" parent="ItemsContainer"]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/h_separation = 20

@@ -24,7 +24,8 @@ func prep_ui() -> void:
 	gun = player.get_gun()
 	
 	player.connect("player_damaged", set_face_background_alpha)
-	player.connect("gun_updated", ui_update_gun)
+	player.connect("gun_updated", ui_update_held_gun)
+	player.connect("guns_held_updated", ui_update_guns)
 	player.connect("ammo_counts_updated", ui_update_ammo_counts)
 	player.connect("player_stats_updated", ui_update_player_stats)
 	player.connect("inventory_updated", ui_update_inventory_items)
@@ -35,14 +36,17 @@ func set_face_background_alpha(percent: float) -> void:
 	var c: Color = fb.get_color()
 	fb.set_color(Color(c.r, c.g, c.b, percent))
 	
-func ui_update_gun(gun_stats: GunStats) -> void:
-	var gun_texture: TextureRect = $ItemsContainer/Weapon/GunTexture
-	gun_texture.texture = load(gun_stats.gun_image_path)
-	$ItemsContainer/Weapon/VBoxContainer/GunName.text = gun_stats.gun_name
-	$ItemsContainer/Weapon/VBoxContainer/GunDamage.text = str("Damage Multiplier: ", gun_stats.damage_multiplier)
-	$ItemsContainer/Weapon/VBoxContainer/GunFireRate.text = str("Shots per burst: ", gun_stats.bullets_per_shot)
-	$ItemsContainer/Weapon/VBoxContainer/GunBurstCount.text = str("Bursts per trigger pull: ", gun_stats.shots_per_burst)
-	
+func ui_update_held_gun(gun_stats: GunStats) -> void:
+	pass
+
+func ui_update_guns(guns: Array[Gun]) -> void:
+	for child in %GunsContainer.get_children():
+		%GunsContainer.remove_child(child)
+	for _gun in guns:
+		var ui_weapon_scene: UI_Weapon = load("res://scenes/ui_weapon.tscn").instantiate()
+		ui_weapon_scene.prep(_gun.get_gun_stats())
+		%GunsContainer.add_child(ui_weapon_scene)
+
 func ui_update_ammo(ammo_stats) -> void:
 	pass
 	

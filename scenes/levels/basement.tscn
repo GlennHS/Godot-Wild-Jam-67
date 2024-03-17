@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bhfisvccwil76"]
+[gd_scene load_steps=21 format=3 uid="uid://bhfisvccwil76"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_1r6aa"]
 [ext_resource type="Texture2D" uid="uid://dgpc25ra2pwpi" path="res://sprites/ui_sprites/parallax.png" id="1_mbiw3"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://cm056b14yr0y2" path="res://sprites/inventory_items/key_yellow.png" id="11_ib4nb"]
 [ext_resource type="Texture2D" uid="uid://bhqop8vqw0u03" path="res://sprites/inventory_items/key_blue.png" id="12_5k6s0"]
 [ext_resource type="PackedScene" uid="uid://d0anpoflerrpe" path="res://scenes/door.tscn" id="12_jlwr2"]
+[ext_resource type="Texture2D" uid="uid://bvsrldv8i0n5g" path="res://sprites/ui_sprites/guns/pistol.png" id="14_kthhj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iw2ae"]
 atlas = ExtResource("5_egojx")
@@ -172,3 +173,9 @@ key_needed = "Blue Key"
 position = Vector2(248, 8)
 rotation = 4.71239
 key_needed = "Yellow Key"
+
+[node name="Item3" parent="." instance=ExtResource("10_oj412")]
+position = Vector2(24, 72)
+image = ExtResource("14_kthhj")
+item_name = "Shotgun"
+item_type = "Gun"

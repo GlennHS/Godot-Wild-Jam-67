@@ -1,0 +1,65 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4cwi0o16sd7t"]
+
+[ext_resource type="Texture2D" uid="uid://bvsrldv8i0n5g" path="res://sprites/ui_sprites/guns/pistol.png" id="1_jg7dt"]
+[ext_resource type="Script" path="res://scripts/ui_weapon.gd" id="1_yupx3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sg5bv"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="Weapon" type="PanelContainer"]
+offset_right = 145.0
+offset_bottom = 80.0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_sg5bv")
+script = ExtResource("1_yupx3")
+
+[node name="GunTexture" type="TextureRect" parent="."]
+texture_filter = 1
+texture_repeat = 1
+custom_minimum_size = Vector2(96, 48)
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("1_jg7dt")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+alignment = 1
+
+[node name="GunName" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 12
+text = "L&S Shortarm 7+1 Round"
+
+[node name="GunDamage" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+text = "Damage Multiplier: 0.5x"
+
+[node name="GunFireRate" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+text = "Shots per Burst: 1"
+
+[node name="GunBurstCount" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+text = "Bursts per Trigger Pull: 1"
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
