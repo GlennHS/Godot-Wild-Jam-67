@@ -201,7 +201,10 @@ func change_gun(new_gun_scene: String) -> void:
 	in_mag = gun.mag_size
 	gun_changed()
 	refresh_ui()
-	
+
+func change_gun_by_name(name: String) -> void:
+	change_gun(GUN_SCENE_MAP[name])
+
 func get_gun() -> Node2D:
 	return $RotationPoint/Gun
 

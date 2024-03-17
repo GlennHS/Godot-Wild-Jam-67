@@ -16,14 +16,14 @@ scale = Vector2(0.4, 0.4)
 texture = ExtResource("2_5kxji")
 
 [node name="FirePointCollision" type="Area2D" parent="."]
-position = Vector2(23, 0)
+position = Vector2(10, 0)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FirePointCollision"]
 shape = SubResource("RectangleShape2D_o2bsr")
 
 [node name="FirePoint" type="Marker2D" parent="."]
-position = Vector2(18, 0)
+position = Vector2(8, 0)
 
 [node name="BurstTimer" type="Timer" parent="."]
 wait_time = 0.2
