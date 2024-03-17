@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1yogmjhyl232"]
+[gd_scene load_steps=8 format=3 uid="uid://d1yogmjhyl232"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_c1sec"]
 [ext_resource type="Texture2D" uid="uid://b8nrmpodbv1bv" path="res://sprites/player_new.png" id="2_ebeo3"]
 [ext_resource type="PackedScene" uid="uid://cdn4wr24v2nc3" path="res://scenes/guns/pistol.tscn" id="3_80vtd"]
 [ext_resource type="Theme" uid="uid://cpxca4qeaggbs" path="res://ui_theme.tres" id="4_30nog"]
 [ext_resource type="Texture2D" uid="uid://bo5rg6rbxavr6" path="res://sprites/neutral_point_light.png" id="5_0wfc8"]
+[ext_resource type="AudioStream" uid="uid://dm5bth4sqkv1q" path="res://audio/sfx/walk.wav" id="6_m13c5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p1x6a"]
 size = Vector2(16, 16)
@@ -59,3 +60,6 @@ energy = 1.54
 shadow_enabled = true
 shadow_color = Color(0, 0, 0, 1)
 texture = ExtResource("5_0wfc8")
+
+[node name="WalkSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_m13c5")

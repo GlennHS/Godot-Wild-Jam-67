@@ -45,5 +45,6 @@ func _physics_process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
+		$PickupAudio.play()
 		emit_signal("picked_up", inv_item)
 		queue_free()

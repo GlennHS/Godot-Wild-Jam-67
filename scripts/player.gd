@@ -130,13 +130,15 @@ func move(direction: Vector2):
 		return false
 	
 	for mob: Mob in get_tree().get_nodes_in_group("mobs"):
-		@warning_ignore("narrowing_conversion")
-		var mob_tile = tile_map.local_to_map(mob.global_position)
-		if target_tile == mob_tile:
-			return false
+		if mob.health > 0:
+			var mob_tile = tile_map.local_to_map(mob.global_position)
+			if target_tile == mob_tile:
+				return false
 	
 	# Move player
 	global_position = tile_map.map_to_local(target_tile)
+	$WalkSound.pitch_scale = randf_range(0.8, 1.2)
+	$WalkSound.play()
 	return true
 
 func try_open_door() -> bool:

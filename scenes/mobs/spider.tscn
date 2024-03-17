@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dyp38iq02ywhy"]
+[gd_scene load_steps=6 format=3 uid="uid://dyp38iq02ywhy"]
 
 [ext_resource type="Texture2D" uid="uid://86keaobt3r8l" path="res://sprites/spider.png" id="1_lpodg"]
 [ext_resource type="Script" path="res://scripts/mobs/spider.gd" id="1_qetey"]
+[ext_resource type="AudioStream" uid="uid://c2aaogfjs0cu7" path="res://audio/sfx/enemyKilled.wav" id="4_3mckf"]
 [ext_resource type="Theme" uid="uid://cpxca4qeaggbs" path="res://ui_theme.tres" id="4_6wsnq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p1x6a"]
@@ -47,3 +48,6 @@ debug_path_custom_point_size = 8.76
 [node name="MovePause" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="KilledAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_3mckf")

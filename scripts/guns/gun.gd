@@ -26,6 +26,7 @@ func shoot():
 		return
 	# Instantiate X bullets with random destinations inside cone of fire
 	for s in shots_per_burst:
+		$ShootSound.play()
 		for i in bullets_per_shot:
 			# Pick a point inside the fire cone as a target and shoot at it
 			var random_rotation = randf_range(-spread, spread)
@@ -43,6 +44,7 @@ func fire_bullet(bullet_rotation):
 	get_tree().root.add_child(b)
 
 func reload() -> void:
+	$ReloadSound.play()
 	bullets_in_mag = mag_size
 
 # Enable this if you want to babysit the player...

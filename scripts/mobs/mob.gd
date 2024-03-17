@@ -59,11 +59,12 @@ func get_directions(x: Vector2, y: Vector2) -> Array[Vector2]:
 		return [Vector2.LEFT, Vector2.UP]
 	
 func execute_turn():
+	if health <= 0:
+		return
+	
 	for i in move_speed:
 		if global_position.distance_to(player.global_position) <= 16:
-			player.hit({
-				"damage": damage_dealt
-			})
+			attack()
 			return
 		# Get next point in navigation
 		var next_pos: Vector2 = nav_agent.get_next_path_position()
@@ -101,6 +102,9 @@ func check_if_visible() -> bool:
 		return true
 
 func move(direction: Vector2):
+	if(health <= 0):
+		return
+	
 	# Get current tile Vector2i
 	var current_tile: Vector2i = tile_map.local_to_map(global_position)
 	# Get target tile Vector2i
@@ -116,9 +120,10 @@ func move(direction: Vector2):
 		return false
 		
 	for mob: Mob in get_tree().get_nodes_in_group("mobs"):
-		var mob_tile = tile_map.local_to_map(mob.global_position)
-		if target_tile == mob_tile:
-			return false
+		if mob.health > 0:
+			var mob_tile = tile_map.local_to_map(mob.global_position)
+			if target_tile == mob_tile:
+				return false
 	
 	global_position = tile_map.map_to_local(target_tile)
 	return true
@@ -127,10 +132,18 @@ func hit(hit_data):
 	health -= hit_data.damage
 	update_healthbar()
 	if health <= 0:
-		queue_free()
+		death()
+		
+func death():
+	health = 0
+	$RotationPoint/Sprite2D.texture = load("res://sprites/spider_dead.png")
+	$CollisionShape2D.disabled = true
+	$KilledAudio.play()
 		
 func attack() -> void:
-	return
+	player.hit({
+		"damage": damage_dealt
+	})
 	
 func update_healthbar():
 	$Healthbar.value = health

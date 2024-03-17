@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cdn4wr24v2nc3"]
+[gd_scene load_steps=6 format=3 uid="uid://cdn4wr24v2nc3"]
 
 [ext_resource type="Script" path="res://scripts/guns/pistol.gd" id="1_gwh3g"]
 [ext_resource type="Texture2D" uid="uid://txrvotmqr26h" path="res://sprites/guns/pistol.png" id="2_wnvlf"]
+[ext_resource type="AudioStream" uid="uid://bvyswy47ykh3n" path="res://audio/sfx/shotgun.wav" id="3_d3hnn"]
+[ext_resource type="AudioStream" uid="uid://1akm30qo3s1f" path="res://audio/sfx/reload.wav" id="3_klyxf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o2bsr"]
 size = Vector2(1, 1)
@@ -28,6 +30,14 @@ position = Vector2(5, 0)
 [node name="BurstTimer" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_d3hnn")
+volume_db = -8.0
+
+[node name="ReloadSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_klyxf")
+volume_db = -8.0
 
 [connection signal="body_entered" from="FirePointCollision" to="." method="_on_fire_point_body_entered"]
 [connection signal="body_exited" from="FirePointCollision" to="." method="_on_fire_point_body_exited"]
