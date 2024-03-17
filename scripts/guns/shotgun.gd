@@ -8,4 +8,5 @@ func _init() -> void:
 	gun_name = "Shotgun"
 	gun_image_path = "res://sprites/guns/gun.png"
 	gun_display_name = "Lazov 12-Spread Shotgun"
-	mag_size = 8
+	mag_size = 4
+	bullets_in_mag = mag_size

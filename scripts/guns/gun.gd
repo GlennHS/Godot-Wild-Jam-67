@@ -13,6 +13,7 @@ var gun_name := "Gun"
 var gun_image_path := ""
 var gun_display_name := "Gun"
 var mag_size := 1
+var bullets_in_mag := mag_size
 
 @onready var stats = get_gun_stats()
 
@@ -31,6 +32,7 @@ func shoot():
 			fire_bullet(random_rotation)
 		$BurstTimer.start()
 		await $BurstTimer.timeout
+	reduce_ammo_count()
 	
 func fire_bullet(bullet_rotation):
 	var b: Node2D = bullet_scene.instantiate()
@@ -39,6 +41,9 @@ func fire_bullet(bullet_rotation):
 		"damage_multiplier": damage_multiplier
 	})
 	get_tree().root.add_child(b)
+
+func reload() -> void:
+	bullets_in_mag = mag_size
 
 # Enable this if you want to babysit the player...
 func _on_fire_point_body_entered(_body) -> void:
@@ -54,6 +59,12 @@ func change_ammo(ammo_scene) -> void:
 	
 func get_texture() -> Texture2D:
 	return $Sprite2D.texture
+	
+func get_ammo_count() -> int:
+	return bullets_in_mag
+	
+func reduce_ammo_count(qty := 1) -> void:
+	bullets_in_mag -= qty
 	
 func get_gun_stats() -> GunStats:
 	return GunStats.new(

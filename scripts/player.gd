@@ -21,7 +21,7 @@ signal inventory_updated
 
 var is_turn := true
 var can_shoot := true
-var in_mag: int = 6
+var in_mag: int = 0
 var mags_held: int = 2
 var inventory: Array[InventoryItem] = []
 var guns_held: Array[Gun] = []
@@ -68,7 +68,9 @@ func _input(event):
 	elif event.is_action_pressed("reload"):
 		if mags_held > 0:
 			mags_held -= 1
-			in_mag = get_gun().mag_size
+			get_gun().reload()
+			in_mag = get_gun().get_ammo_count()
+			print("In Mag: ", in_mag)
 			ammo_counts_changed()
 			has_moved = true
 	elif event.is_released() && event.is_action_released("shoot"):
@@ -76,11 +78,12 @@ func _input(event):
 			get_gun().shoot()
 			has_moved = true
 			has_shot = true
-			in_mag -= 1
+			in_mag = get_gun().get_ammo_count()
 			ammo_counts_changed()
 	else:
 		# We don't want to bother continuing or process a turn so exit here
 		return
+	print("In Mag: ", in_mag)
 	
 	if not has_moved:
 		return
@@ -187,25 +190,33 @@ func get_ammo_held_stats() -> AmmoHeldStats:
 		mags_held
 	)
 
+func get_gun_by_scene(scene_path: String) -> String:
+	for _name in GUN_SCENE_MAP:
+		if GUN_SCENE_MAP[_name] == scene_path:
+			print(_name)
+			return _name
+	return ""
+
 func change_gun(new_gun_scene: String) -> void:
-	var gun_scene: Resource = load(new_gun_scene) # Load the new Gun's scene
-	var gun: Gun = gun_scene.instantiate() # Instantiate the new Gun
+	#var gun_scene: Resource = load(new_gun_scene) # Load the new Gun's scene
+	#var gun: Gun = gun_scene.instantiate() # Instantiate the new Gun
+	var gun = get_gun_from_held_guns(get_gun_by_scene(new_gun_scene)).duplicate()
 	var saved_offset: Vector2 = get_gun().position # Remember the offset for the gun so it looks normal
 	gun.position = saved_offset
-	
+	in_mag = gun.get_ammo_count()
+
 	$RotationPoint/Gun.name = "GunR" # Do this otherwise new gun gets called "Gun2" and breaks everything
 	$RotationPoint/GunR.queue_free()
 	$RotationPoint.add_child(gun)
 	gun.name = "Gun"
 	
-	in_mag = gun.mag_size
 	gun_changed()
 	refresh_ui()
 
 func change_gun_by_name(name: String) -> void:
 	change_gun(GUN_SCENE_MAP[name])
 
-func get_gun() -> Node2D:
+func get_gun() -> Gun:
 	return $RotationPoint/Gun
 
 func picked_item_up(item: InventoryItem) -> void:
@@ -249,12 +260,21 @@ func guns_check_for_gun_by_name(item_name: String) -> bool:
 
 func get_gun_index_from_guns_by_name(item_name: String) -> int:
 	var i: int = 0
-	for gun: Gun in guns_held:
-		if gun.gun_name == item_name:
+	for _gun: Gun in guns_held:
+		if _gun.gun_name == item_name:
 			return i
 		else:
 			i += 1
 	return -1
+
+func get_gun_from_held_guns(gun_name: String) -> Variant:
+	var i: int = 0
+	for _gun: Gun in guns_held:
+		if _gun.gun_name == gun_name:
+			return _gun
+		else:
+			i += 1
+	return null
 
 func game_over():
 	get_tree().paused = true

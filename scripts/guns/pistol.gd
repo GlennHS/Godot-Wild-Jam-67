@@ -9,3 +9,4 @@ func _init():
 	gun_image_path = "res://sprites/ui_sprites/guns/pistol.png"
 	gun_display_name = "L&S Shortarm 7+1 Round"
 	mag_size = 8
+	bullets_in_mag = mag_size
